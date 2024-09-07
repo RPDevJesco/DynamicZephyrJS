@@ -245,6 +245,30 @@ From there, you will be able to make full usage of ZephyrJS.
 </head>
 ```
 
+# Core Component Documentation
+
+This project has additional documentation available in the following sections:
+
+## Templates
+- [ZephyrButton](Documentation/templates/ZephyrButton.md)
+- [ZephyrFocusCard](Documentation/templates/ZephyrFocusCard.md)
+- [ZephyrGridLayout](Documentation/templates/ZephyrGridLayout.md)
+- [ZephyrMarkdownEditor](Documentation/templates/ZephyrMarkdownEditor.md)
+- [ZephyrMarkdownRenderer](Documentation/templates/ZephyrMarkdownRenderer.md)
+- [ZephyrMarkdownShowcase](Documentation/templates/ZephyrMarkdownShowcase.md)
+- [ZephyrSlideReveal](Documentation/templates/ZephyrSlideReveal.md)
+
+## Zephyr Core
+- [CPPTOKENS](Documentation/zephyrcore/CPPTOKENS.md)
+- [CSSTOKENS](Documentation/zephyrcore/CSSTOKENS.md)
+- [CTOKENS](Documentation/zephyrcore/CTOKENS.md)
+- [HTMLTOKENS](Documentation/zephyrcore/HTMLTOKENS.md)
+- [JAVATOKENS](Documentation/zephyrcore/JAVATOKENS.md)
+- [JSTOKENS](Documentation/zephyrcore/JSTOKENS.md)
+- [PYTOKENS](Documentation/zephyrcore/PYTOKENS.md)
+- [ZephyrJS](Documentation/zephyrcore/ZephyrJS.md)
+
+
 ZephyrJS also boasts a CSS Framework which houses utility classes and animations.
 
 ### Available Utilities
