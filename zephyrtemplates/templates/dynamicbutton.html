@@ -1,0 +1,129 @@
+<template id="zephyr-button">
+  <style>
+    .button-wrapper {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dynamic-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 20px;
+      border: 2px solid var(--accent-color);
+      border-radius: 5px;
+      background-color: var(--background-color);
+      color: var(--dark-text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .text-container {
+      transition: all 0.3s ease;
+    }
+    .text-inside .dynamic-button {
+      padding: 0;
+    }
+    .text-left .text-container { margin-right: 10px; }
+    .text-right .text-container { margin-left: 10px; }
+    .text-above .text-container { margin-bottom: 5px; }
+    .text-below .text-container { margin-top: 5px; }
+    .text-above, .text-below {
+      flex-direction: column;
+    }
+    .text-left, .text-right {
+      flex-direction: row;
+    }
+    .type-checkbox, .type-radio {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+    }
+    .type-checkbox::before, .type-radio::before {
+      content: '';
+      display: block;
+      width: 14px;
+      height: 14px;
+      margin: 3px;
+      background-color: transparent;
+      transition: background-color 0.2s ease;
+    }
+    .type-checkbox::before {
+      border-radius: 2px;
+    }
+    .type-radio::before {
+      border-radius: 50%;
+    }
+    .type-checkbox.checked::before, .type-radio.checked::before {
+      background-color: var(--accent-color);
+    }
+    .dynamic-button:hover {
+      background-color: var(--accent-color);
+    }
+    .dynamic-button:active {
+      transform: scale(0.98);
+    }
+    .grouped {
+      margin-right: 5px;
+    }
+    .type-button {
+      background-color: var(--background-color);
+      color: var(--dark-text);
+      transition: background-color 0.3s ease;
+    }
+    .type-button:hover {
+      background-color: var(--background-color);
+    }
+    .type-button.clicked {
+      background-color: var(--accent-color);
+    }
+    .type-toggle {
+      width: 60px;
+      height: 60px;
+      background-color: var(--background-color);
+      border: 2px solid var(--accent-color);
+      border-radius: 50%;
+      padding: 0;
+      position: relative;
+      transition: 0.3s;
+      overflow: hidden;
+    }
+    .type-toggle::after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: var(--accent-color);
+      transition: 0.3s;
+    }
+    .type-toggle.checked::after {
+      left: 50%;
+    }
+    .text-left .type-toggle,
+    .text-right .type-toggle {
+      margin: 0 10px;
+    }
+    .text-container {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--dark-text);
+      margin-left: 10px; /* Add some space between the toggle and the text */
+    }
+    .text-left .type-toggle,
+    .text-right .type-toggle {
+      margin: 0 10px;
+    }
+  </style>
+  <div class="button-wrapper text-{{textPosition}}">
+    <button class="dynamic-button">
+    </button>
+    <div class="text-container">
+      {{type === 'toggle' ? (checked ? toggleOnText : toggleOffText) : (isClicked && clickedText ? clickedText : value)}}
+    </div>
+  </div>
+</template>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="module" src="./zephyrcore/zephyr.js"></script>
+    <script type="module" src="./zephyrtemplates/ZephyrCore.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zephyr Showcase</title>
+    <link rel="stylesheet" href="./zephyrcss/variables.css">
+    <link rel="stylesheet" href="./zephyrcss/zephyr.css">
+</head>
+<body>
+
+<adaptive-grid-layout>
+    <!-- Toggle button with text on the right and event binding -->
+    <zephyr-button
+            id="myButton"
+            type="toggle"
+            value="Click me!"
+            toggle-on-text="ON"
+            toggle-off-text="OFF"
+            text-position="right"
+            onzephyr-change="setMyTheme(event)">
+    </zephyr-button>
+
+    <!-- Standard button with text inside -->
+    <zephyr-button type="button" value="Click me"></zephyr-button>
+
+    <!-- Button with text on the left -->
+    <zephyr-button type="button" value="Left Text" text-position="right"></zephyr-button>
+
+    <!-- Button with clicked text -->
+    <zephyr-button type="button" value="Click Me!" clicked-text="Clicked!!!" text-position="above"></zephyr-button>
+
+    <!-- Checkbox with text on the right -->
+    <zephyr-button type="checkbox" value="Agree" text-position="right"></zephyr-button>
+
+    <!-- Radio button group with text below -->
+    <zephyr-button type="radio" value="Option 1" text-position="below" group="options"></zephyr-button>
+    <zephyr-button type="radio" value="Option 2" text-position="below" group="options"></zephyr-button>
+
+    <!-- Zephyr focus card with image size set -->
+    <zephyr-slide-reveal width="800px" height="400px" orientation="horizontal" reveal-percentage="50">
+        <img slot="background" src="https://wallpapers.com/images/featured/cute-anime-profile-pictures-k6h3uqxn6ei77kgl.jpg" alt="Background Image">
+        <img slot="foreground" src="https://steamuserimages-a.akamaihd.net/ugc/1772705834411379245/CBDFB33FBE959A7229DEF55CE3221EAA372E436B/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" alt="Foreground Image">
+    </zephyr-slide-reveal>
+
+    <!-- Zephyr focus card with large image size -->
+    <zephyr-focus-card width="800px" height="400px" zoom-factor="2.5" focus-size="150">
+        <img src="https://wallpapers.com/images/featured/cute-anime-profile-pictures-k6h3uqxn6ei77kgl.jpg" alt="Random landscape image">
+    </zephyr-focus-card>
+
+    <zephyr-markdown-showcase sections='[
+      {
+        "header": "Introduction",
+        "content": "# Welcome to the Markdown Showcase\nThis is a markdown-rendered section with code highlighting."
+      },
+      {
+        "header": "Code Example",
+        "content": "Here&#39;s a sample JavaScript code:\n```js\nfunction greet(name) {\n  // This is a comment\n  console.log(`Hello, ${name}!`);\n}\ngreet(&#39;World&#39;);```"
+      },
+      {
+        "header": "Conclusion",
+        "content": "### Thanks for exploring the Markdown Showcase!\nFeel free to modify the sections and add more code examples."
+      }
+    ]'>
+    </zephyr-markdown-showcase>
+</adaptive-grid-layout>
+
+<script>
+    function setMyTheme(event) {
+        const isDarkMode = event.detail.checked;
+        if (isDarkMode) {
+            setTheme(Themes.HELLFIRE);
+        } else {
+            setTheme(Themes.FANTASY);
+        }
+    }
+</script>
+</body>
+</html>

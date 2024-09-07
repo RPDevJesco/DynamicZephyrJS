@@ -1,0 +1,65 @@
+<template id="markdown-renderer-template">
+    <style>
+        .markdown-container {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+        .markdown-content h1 { font-size: 2em; }
+        .markdown-content h2 { font-size: 1.5em; }
+        .markdown-content h3 { font-size: 1.25em; }
+        .markdown-content ul {
+            padding-left: 2em;
+            margin-bottom: 16px;
+        }
+        .markdown-content li {
+            margin-bottom: 8px;
+            list-style-type: disc;
+        }
+        .markdown-content p {
+            margin-bottom: 16px;
+        }
+        .section-header {
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+        pre {
+            background-color: var(--dark-text);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 16px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9em;
+        }
+        .keyword { color: var(--markdown-keyword); }
+        .string { color: var(--markdown-string); }
+        .number { color: var(--markdown-number); }
+        .function { color: var(--markdown-function); }
+        .comment { color: var(--markdown-comment); }
+        .method { color: var(--markdown-method); }
+        .tag { color: var(--markdown-tag); }
+        .attribute { color: var(--markdown-attribute); }
+        .at-rule { color: var(--markdown-at-rule); }
+        .punctuation { color: var(--markdown-punctuation); }
+        .property { color: var(--markdown-property); }
+        .value { color: var(--markdown-value); }
+        .selector { color: var(--markdown-selector); }
+        .indentation { color: var(--markdown-indentation); }
+    </style>
+    <div class="markdown-container">
+        <div id="markdown-content"></div>
+    </div>
+</template>
