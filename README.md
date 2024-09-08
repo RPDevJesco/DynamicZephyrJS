@@ -257,6 +257,7 @@ This project has additional documentation available in the following sections:
 - [ZephyrMarkdownRenderer](Documentation/templates/ZephyrMarkdownRenderer.md)
 - [ZephyrMarkdownShowcase](Documentation/templates/ZephyrMarkdownShowcase.md)
 - [ZephyrSlideReveal](Documentation/templates/ZephyrSlideReveal.md)
+- [ZephyrCard](Documentation/templates/ZephyrCard.md)
 
 ## Zephyr Core
 - [CPPTOKENS](Documentation/zephyrcore/CPPTOKENS.md)
