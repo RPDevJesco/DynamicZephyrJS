@@ -38,3 +38,4 @@ import MarkdownShowcase from "../zephyrtemplates/MarkdownShowcase.js";
 import DynamicFocusCard from "../zephyrtemplates/DynamicFocusCard.js";
 import SlideReveal from "../zephyrtemplates/SlideReveal.js";
 import AdaptiveGridLayout from "../zephyrtemplates/AdaptiveGridLayout.js";
+import DynamicCard from "../zephyrtemplates/DynamicCard.js";

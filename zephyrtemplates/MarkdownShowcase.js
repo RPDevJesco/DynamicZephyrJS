@@ -41,17 +41,14 @@ export default class MarkdownShowcase extends ZephyrJS {
 
     connectedCallback() {
         super.connectedCallback();
-        console.log('MarkdownShowcase connected');
         this.renderContent();
         this._shadowRoot.addEventListener('click', this.handleNavigation.bind(this));
     }
 
     handleNavigation(event) {
         if (event.target.classList.contains('nav-prev')) {
-            console.log('Previous button clicked');
             this.prevSection();
         } else if (event.target.classList.contains('nav-next')) {
-            console.log('Next button clicked');
             this.nextSection();
         }
     }
@@ -74,11 +71,9 @@ export default class MarkdownShowcase extends ZephyrJS {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        console.log(`Attribute changed: ${name}`, newValue);
         if (name === 'sections') {
             try {
                 const sections = JSON.parse(newValue);
-                console.log('Parsed sections:', sections);
                 this.state.sections = sections;
                 this.state.currentSectionIndex = 0;
                 this.renderContent();
@@ -117,7 +112,6 @@ export default class MarkdownShowcase extends ZephyrJS {
     }
 
     renderContent() {
-        console.log('Rendering content', this.state);
         const currentSection = this.state.sections[this.state.currentSectionIndex];
         const content = `
             <style>
@@ -195,11 +189,8 @@ export default class MarkdownShowcase extends ZephyrJS {
             </div>
         `;
 
-        console.log('Generated content:', content);
-
         if (this._shadowRoot) {
             this._shadowRoot.innerHTML = content;
-            console.log('Content set to shadow root');
         } else {
             console.error('Shadow root not available');
         }
@@ -215,7 +206,6 @@ export default class MarkdownShowcase extends ZephyrJS {
     }
 
     render() {
-        console.log('Render method called');
         this.renderContent();
         return '';
     }
