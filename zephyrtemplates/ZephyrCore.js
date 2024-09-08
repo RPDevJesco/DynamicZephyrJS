@@ -39,3 +39,4 @@ import DynamicFocusCard from "../zephyrtemplates/DynamicFocusCard.js";
 import SlideReveal from "../zephyrtemplates/SlideReveal.js";
 import AdaptiveGridLayout from "../zephyrtemplates/AdaptiveGridLayout.js";
 import DynamicCard from "../zephyrtemplates/DynamicCard.js";
+import DataTable from "../zephyrtemplates/DataTable.js";

@@ -12,18 +12,60 @@
 <body>
 
 <adaptive-grid-layout>
-    <zephyr-card
-        data-transition="slide"
-        front-image="https://wallpapers.com/images/featured/cute-anime-profile-pictures-k6h3uqxn6ei77kgl.jpg">
-        <div slot="front">
-            <h2>Title</h2>
-            <p>Short summary or description.</p>
-        </div>
-        <div slot="back">
-            <h2>Back Title</h2>
-            <p>Back content</p>
-        </div>
-    </zephyr-card>
+    <!-- Toggle button with text on the right and event binding -->
+    <zephyr-button
+            id="myButton"
+            type="toggle"
+            value="Click me!"
+            toggle-on-text="ON"
+            toggle-off-text="OFF"
+            text-position="right"
+            onzephyr-change="setMyTheme(event)">
+    </zephyr-button>
+    <zephyr-data-table id="pivot"
+       data-type="default"
+       pagination="5"
+       filtering="true"
+       sorting="true"
+       grouping="true"
+       group-by="category"
+       multi-select="true"
+       editing="true"
+       data-source="generateSampleData">
+    </zephyr-data-table>
+    <zephyr-data-table id="accordion"
+       data-type="accordion"
+       pagination="5"
+       filtering="true"
+       sorting="true"
+       grouping="true"
+       group-by="category"
+       multi-select="true"
+       editing="true"
+       export="csv,json,xml"
+       data-source="generateSampleData">
+    </zephyr-data-table>
+    <zephyr-data-table id="tree"
+       data-type="tree-structured"
+       pagination="5"
+       filtering="true"
+       sorting="true"
+       grouping="true"
+       group-by="category"
+       multi-select="true"
+       editing="true"
+       export="csv,json,xml"
+       data-source="generateSampleData">
+    </zephyr-data-table>
+    <zephyr-data-table id="drill"
+       data-type="drill-down"
+       export="csv,json,xml"
+       data-source="generateSampleData">
+    </zephyr-data-table>
+    <zephyr-data-table id="aggregated"
+       data-type="aggregated"
+       data-source="generateSampleData">
+    </zephyr-data-table>
 </adaptive-grid-layout>
 
 <script>
@@ -34,6 +76,18 @@
         } else {
             setTheme(Themes.FANTASY);
         }
+    }
+
+    // Function to generate sample data
+    function generateSampleData() {
+        const categories = ['Electronics', 'Clothing', 'Books', 'Home & Garden'];
+        return Array.from({ length: 20 }, (_, i) => ({
+            id: i + 1,
+            name: `Product ${i + 1}`,
+            category: categories[Math.floor(Math.random() * categories.length)],
+            price: Math.floor(Math.random() * 1000) + 10,
+            stock: Math.floor(Math.random() * 100)
+        }));
     }
 </script>
 </body>

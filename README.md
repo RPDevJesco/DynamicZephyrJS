@@ -64,16 +64,6 @@ defineCustomElement('my-component', MyComponent);
 
 ### Core Components
 ZephyrJS comes with several pre-built components:
-```html
-<zephyr-adaptive-grid-layout></zephyr-adaptive-grid-layout>
-<zephyr-button></zephyr-button>
-<zephyr-focus-card></zephyr-focus-card>
-<zephyr-markdown-editor></zephyr-markdown-editor>
-<zephyr-markdown-editor></zephyr-markdown-editor>
-<zephyr-markdown-renderer></zephyr-markdown-renderer>
-<zephyr-markdown-showcase></zephyr-markdown-showcase>
-<zephyr-slide-reveal></zephyr-slide-reveal>
-```
 see (/Documentation/templates/) for individual documentation of components.
 
 ### Customization
@@ -258,6 +248,8 @@ This project has additional documentation available in the following sections:
 - [ZephyrMarkdownShowcase](Documentation/templates/ZephyrMarkdownShowcase.md)
 - [ZephyrSlideReveal](Documentation/templates/ZephyrSlideReveal.md)
 - [ZephyrCard](Documentation/templates/ZephyrCard.md)
+- [ZephyrModal](Documentation/templates/ZephyrModal.md)
+- [ZephyrDataTable](Documentation/templates/ZephyrDataTable.md)
 
 ## Zephyr Core
 - [CPPTOKENS](Documentation/zephyrcore/CPPTOKENS.md)
