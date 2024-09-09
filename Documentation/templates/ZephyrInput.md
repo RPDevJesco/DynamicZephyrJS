@@ -9,6 +9,7 @@ The `DynamicInput` component is a flexible form input element designed for moder
 - **Flexible Validation**: Supports custom regular expressions for specialized input validation.
 - **Dynamic Behavior**: Input fields validate automatically upon user interaction, with error feedback provided in real-time.
 - **Optional Attributes**: Many attributes are optional and come with reasonable defaults to simplify usage.
+- **Slider Support**: Handles `type="range"` inputs, providing a slider interface for users, with `min`, `max`, and `step` attributes to define its range.
 
 ## Usage
 
@@ -31,11 +32,15 @@ In this example, the component validates the email format automatically using th
 ### Attributes
 
 - **label**: A string to specify the label text for the input field. (Default: `"Enter Value"`)
-- **type**: The type of input, such as `text`, `email`, `url`, etc. (Default: `"text"`)
+- **type**: The type of input, such as `text`, `email`, `url`, `range`, etc. (Default: `"text"`)
 - **placeholder**: A string representing the placeholder text for the input. (Default: `""`)
 - **pattern**: Specifies a predefined validation pattern, such as `Email`, `Phone`, or `URL`. Custom regex patterns can also be supplied.
 - **required**: Marks the field as required, ensuring it must be filled out before the form is submitted.
 - **error-message**: Optional custom error message for invalid input. If not provided, a default message based on the pattern will be used.
+- **min**: Minimum value for the `range` slider input. (Default: `0`, only applies to `type="range"`)
+- **max**: Maximum value for the `range` slider input. (Default: `100`, only applies to `type="range"`)
+- **step**: The increment value for the `range` slider input. (Default: `1`, only applies to `type="range"`)
+- **value**: The initial value for the input. Optional for all input types.
 
 ### Predefined Patterns
 
@@ -72,6 +77,19 @@ The component includes several common patterns for validation. These patterns si
 </dynamic-input>
 ```
 
+#### Range Slider Input
+
+```html
+<dynamic-input 
+  label="Volume Control" 
+  type="range" 
+  min="0" 
+  max="100" 
+  step="1" 
+  value="50">
+</dynamic-input>
+```
+
 #### Custom Pattern
 
 For more specific input validation, you can provide a custom regex pattern:
@@ -98,4 +116,4 @@ The `DynamicInput` component ensures that form fields are accessible to all user
 
 ## Conclusion
 
-The `DynamicInput` component simplifies form input handling with built-in patterns for common validation use cases, customizable behavior, and real-time error feedback. Its flexibility makes it ideal for use in modern web applications, reducing the amount of custom validation logic needed while ensuring a user-friendly experience.
+The `DynamicInput` component simplifies form input handling with built-in patterns for common validation use cases, customizable behavior, real-time error feedback, and slider functionality. Its flexibility makes it ideal for use in modern web applications, reducing the amount of custom validation logic needed while ensuring a user-friendly experience.

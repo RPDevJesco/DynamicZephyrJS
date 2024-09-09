@@ -6,7 +6,7 @@ export default class DynamicInput extends ZephyrJS {
     }
 
     static get observedAttributes() {
-        return ['label', 'type', 'placeholder', 'pattern', 'required', 'error-message'];
+        return ['label', 'type', 'placeholder', 'pattern', 'required', 'error-message', 'min', 'max', 'step'];
     }
 
     constructor() {
@@ -19,6 +19,9 @@ export default class DynamicInput extends ZephyrJS {
             required: false,
             errorMessage: '',
             value: '',
+            min: 0,
+            max: 100,
+            step: 1,
             isValid: true,
             showError: false
         };
@@ -60,7 +63,13 @@ export default class DynamicInput extends ZephyrJS {
             placeholder: this.getAttribute('placeholder') || this._state.placeholder,
             pattern: this.getAttribute('pattern') || this._state.pattern,
             required: this.hasAttribute('required'),
-            errorMessage: this.getAttribute('error-message') || ''
+            errorMessage: this.getAttribute('error-message') || '',
+            value: this.getAttribute('value') || this._state.value,
+            ...(this._state.type === 'range' ? {
+                min: this.getAttribute('min') || 0,
+                max: this.getAttribute('max') || 100,
+                step: this.getAttribute('step') || 1
+            } : {})
         };
     }
 
@@ -90,6 +99,10 @@ export default class DynamicInput extends ZephyrJS {
         this._state.showError = !!errorMessage;
 
         this.updateValidationUI(isValid, errorMessage);
+
+        if (this._state.type === 'range') {
+            this._shadowRoot.querySelector(`#${this._uniqueId}-value`).textContent = value;
+        }
     }
 
     updateValidationUI(isValid, errorMessage) {
@@ -110,32 +123,56 @@ export default class DynamicInput extends ZephyrJS {
     }
 
     render() {
-        const { label, type, placeholder, required, value } = this._state;
+        const { label, type, placeholder, required, value, min, max, step } = this._state;
 
-        this._shadowRoot.innerHTML = `
-            <style>
-                :host { display: block; font-family: Arial, sans-serif; margin-bottom: 15px; }
-                label { display: block; margin-bottom: 5px; }
-                input { 
-                    width: 100%; 
-                    padding: 8px; 
-                    border: 2px solid #ccc; 
-                    border-radius: 4px; 
-                    outline: none;
-                }
-                input:focus { border-color: #007bff; }
-                .error { color: red; font-size: 0.8em; margin-top: 5px; display: none; }
-            </style>
-            <label for="${this._uniqueId}">${label}</label>
-            <input
-                id="${this._uniqueId}"
-                type="${type}"
-                placeholder="${placeholder}"
-                value="${value}"
-                ${required ? 'required' : ''}
-            >
-            <div class="error"></div>
-        `;
+        if (type === 'range') {
+            this._shadowRoot.innerHTML = `
+                <style>
+                    :host { display: block; font-family: Arial, sans-serif; margin-bottom: 15px; }
+                    label { display: block; margin-bottom: 5px; }
+                    input[type="range"] { width: 100%; }
+                    .range-value { margin-top: 5px; font-weight: bold; }
+                    .error { color: red; font-size: 0.8em; margin-top: 5px; display: none; }
+                </style>
+                <label for="${this._uniqueId}">${label}</label>
+                <input
+                    id="${this._uniqueId}"
+                    type="range"
+                    min="${min}"
+                    max="${max}"
+                    step="${step}"
+                    value="${value}"
+                    ${required ? 'required' : ''}
+                >
+                <div class="range-value" id="${this._uniqueId}-value">${value}</div>
+                <div class="error"></div>
+            `;
+        } else {
+            this._shadowRoot.innerHTML = `
+                <style>
+                    :host { display: block; font-family: Arial, sans-serif; margin-bottom: 15px; }
+                    label { display: block; margin-bottom: 5px; }
+                    input { 
+                        width: 100%; 
+                        padding: 8px; 
+                        border: 2px solid #ccc; 
+                        border-radius: 4px; 
+                        outline: none;
+                    }
+                    input:focus { border-color: #007bff; }
+                    .error { color: red; font-size: 0.8em; margin-top: 5px; display: none; }
+                </style>
+                <label for="${this._uniqueId}">${label}</label>
+                <input
+                    id="${this._uniqueId}"
+                    type="${type}"
+                    placeholder="${placeholder}"
+                    value="${value}"
+                    ${required ? 'required' : ''}
+                >
+                <div class="error"></div>
+            `;
+        }
 
         this.attachEventListeners();
     }
