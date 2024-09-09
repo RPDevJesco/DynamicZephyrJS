@@ -1,0 +1,151 @@
+<template id="dynamic-modal-template">
+  <style>
+    :host {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: var(--background-color, white);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    :host([open]) {
+      display: block;
+    }
+
+    .modal-header {
+      padding: 16px;
+      background-color: var(--primary-color);
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-body {
+      padding: 16px;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+
+    .modal-footer {
+      padding: 16px;
+      background-color: var(--primary-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: background-color 0.3s ease;
+    }
+
+    .modal-backdrop:hover {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-resizer {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 10px;
+      height: 10px;
+      cursor: se-resize;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background-color: var(--body-bg);
+      position: relative;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background-color: var(--background-color);
+      transition: width 0.3s ease;
+    }
+
+    /* Modal type styles */
+    :host([modal-type="info"]) .modal-header {
+      background-color: var(--info-color);
+      color: var(--light-text, white);
+    }
+
+    :host([modal-type="warning"]) .modal-header {
+      background-color: var(--warning-color);
+      color: var(--dark-text, black);
+    }
+
+    :host([modal-type="confirmation"]) .modal-header {
+      background-color: var(--success-color);
+      color: var(--light-text);
+    }
+
+    /* Modal size styles */
+    :host([modal-size="fullscreen"]) {
+      width: 100% !important;
+      height: 100% !important;
+      top: 0 !important;
+      left: 0 !important;
+      transform: none !important;
+      border-radius: 0;
+    }
+
+    :host([modal-size="small"]) {
+      width: 300px;
+      height: auto;
+    }
+
+    :host([modal-size="large"]) {
+      width: 80%;
+      height: 80%;
+    }
+
+    /* Sticky header styles */
+    :host([modal-sticky-header]) .modal-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    /* Background blur styles */
+    :host(:not([modal-background-blur="false"])) ~ .modal-backdrop {
+      backdrop-filter: blur(5px);
+    }
+
+    .close-button {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: inherit;
+    }
+  </style>
+
+  <div class="modal-content">
+    <div class="modal-header">
+      <slot name="header"></slot>
+      <button class="close-button">&times;</button>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-bar-fill"></div>
+    </div>
+    <div class="modal-body">
+      <slot></slot>
+    </div>
+    <div class="modal-footer">
+      <zephyr-button class="ok-button" value="OK"></zephyr-button>
+      <zephyr-button class="cancel-button" value="Cancel"></zephyr-button>
+    </div>
+  </div>
+</template>

@@ -22,50 +22,50 @@
             text-position="right"
             onzephyr-change="setMyTheme(event)">
     </zephyr-button>
-    <zephyr-data-table id="pivot"
-       data-type="default"
-       pagination="5"
-       filtering="true"
-       sorting="true"
-       grouping="true"
-       group-by="category"
-       multi-select="true"
-       editing="true"
-       data-source="generateSampleData">
-    </zephyr-data-table>
-    <zephyr-data-table id="accordion"
-       data-type="accordion"
-       pagination="5"
-       filtering="true"
-       sorting="true"
-       grouping="true"
-       group-by="category"
-       multi-select="true"
-       editing="true"
-       export="csv,json,xml"
-       data-source="generateSampleData">
-    </zephyr-data-table>
-    <zephyr-data-table id="tree"
-       data-type="tree-structured"
-       pagination="5"
-       filtering="true"
-       sorting="true"
-       grouping="true"
-       group-by="category"
-       multi-select="true"
-       editing="true"
-       export="csv,json,xml"
-       data-source="generateSampleData">
-    </zephyr-data-table>
-    <zephyr-data-table id="drill"
-       data-type="drill-down"
-       export="csv,json,xml"
-       data-source="generateSampleData">
-    </zephyr-data-table>
-    <zephyr-data-table id="aggregated"
-       data-type="aggregated"
-       data-source="generateSampleData">
-    </zephyr-data-table>
+
+    <!-- Buttons to trigger modals -->
+    <zephyr-button id="infoModalTrigger" value="Open Info Modal"></zephyr-button>
+    <zephyr-button id="warningModalTrigger" value="Open Warning Modal"></zephyr-button>
+    <zephyr-button id="confirmationModalTrigger" value="Open Confirmation Modal"></zephyr-button>
+
+    <!-- Info Modal -->
+    <zephyr-modal
+            id="infoModal"
+            modal-trigger="click"
+            modal-type="info"
+            modal-size="auto"
+            modal-sticky-header="false"
+            modal-background-blur="false"
+            modal-exit-intent="false">
+        <h2 slot="header">Info Update</h2>
+        <p>This is an interactive info modal that dynamically adjusts to content and screen size.</p>
+    </zephyr-modal>
+
+    <!-- Warning Modal -->
+    <zephyr-modal
+            id="warningModal"
+            modal-trigger="click"
+            modal-type="warning"
+            modal-size="auto"
+            modal-sticky-header="true"
+            modal-background-blur="false"
+            modal-exit-intent="true">
+        <h2 slot="header">Warning Update</h2>
+        <p>This is an interactive warning modal that dynamically adjusts to content and screen size.</p>
+    </zephyr-modal>
+
+    <!-- Confirmation Modal -->
+    <zephyr-modal
+            id="confirmationModal"
+            modal-trigger="click"
+            modal-type="confirmation"
+            modal-size="auto"
+            modal-sticky-header="true"
+            modal-background-blur="true"
+            modal-exit-intent="false">
+        <h2 slot="header">Confirmation Update</h2>
+        <p>This is an interactive confirmation modal that dynamically adjusts to content and screen size.</p>
+    </zephyr-modal>
 </adaptive-grid-layout>
 
 <script>
@@ -89,6 +89,21 @@
             stock: Math.floor(Math.random() * 100)
         }));
     }
+
+    // Set up modal triggers
+    document.addEventListener('DOMContentLoaded', () => {
+        const infoModalTrigger = document.getElementById('infoModalTrigger');
+        const warningModalTrigger = document.getElementById('warningModalTrigger');
+        const confirmationModalTrigger = document.getElementById('confirmationModalTrigger');
+
+        const infoModal = document.getElementById('infoModal');
+        const warningModal = document.getElementById('warningModal');
+        const confirmationModal = document.getElementById('confirmationModal');
+
+        infoModalTrigger.addEventListener('click', () => infoModal.openModal());
+        warningModalTrigger.addEventListener('click', () => warningModal.openModal());
+        confirmationModalTrigger.addEventListener('click', () => confirmationModal.openModal());
+    });
 </script>
 </body>
 </html>

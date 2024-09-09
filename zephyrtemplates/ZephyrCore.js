@@ -40,3 +40,4 @@ import SlideReveal from "../zephyrtemplates/SlideReveal.js";
 import AdaptiveGridLayout from "../zephyrtemplates/AdaptiveGridLayout.js";
 import DynamicCard from "../zephyrtemplates/DynamicCard.js";
 import DataTable from "../zephyrtemplates/DataTable.js";
+import DynamicModalComponent from "../zephyrtemplates/DynamicModalComponent.js";

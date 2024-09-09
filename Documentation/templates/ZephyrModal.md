@@ -19,23 +19,50 @@ To use the `DynamicModalComponent`, simply add the custom tag to your HTML and i
 
 ### Example:
 ```html
-<dynamic-modal
-  modal-trigger="click"
-  modal-type="info"
-  modal-size="auto"
-  modal-background-blur="true"
-  modal-exit-intent="true">
-  <modal-header>
-    <h2>Important Update</h2>
-  </modal-header>
-  <modal-body>
-    <p>This is an interactive modal that dynamically adjusts to content and screen size.</p>
-  </modal-body>
-  <modal-footer>
-    <button>Okay</button>
-    <button>Cancel</button>
-  </modal-footer>
-</dynamic-modal>
+<!-- Basic Modal -->
+<zephyr-modal id="myModal" modal-type="info" modal-trigger="click">
+    <h2 slot="header">Info Update</h2>
+    <p>This is an interactive info modal.</p>
+</zephyr-modal>
+
+<!-- Info Modal -->
+<zephyr-modal
+        id="infoModal"
+        modal-trigger="click"
+        modal-type="info"
+        modal-size="auto"
+        modal-sticky-header="false"
+        modal-background-blur="false"
+        modal-exit-intent="false">
+    <h2 slot="header">Info Update</h2>
+    <p>This is an interactive info modal that dynamically adjusts to content and screen size.</p>
+</zephyr-modal>
+
+<!-- Warning Modal -->
+<zephyr-modal
+        id="warningModal"
+        modal-trigger="click"
+        modal-type="warning"
+        modal-size="auto"
+        modal-sticky-header="true"
+        modal-background-blur="false"
+        modal-exit-intent="true">
+    <h2 slot="header">Warning Update</h2>
+    <p>This is an interactive warning modal that dynamically adjusts to content and screen size.</p>
+</zephyr-modal>
+
+<!-- Confirmation Modal -->
+<zephyr-modal
+        id="confirmationModal"
+        modal-trigger="click"
+        modal-type="confirmation"
+        modal-size="auto"
+        modal-sticky-header="true"
+        modal-background-blur="true"
+        modal-exit-intent="false">
+    <h2 slot="header">Confirmation Update</h2>
+    <p>This is an interactive confirmation modal that dynamically adjusts to content and screen size.</p>
+</zephyr-modal>
 ```
 
 ### Attributes:
