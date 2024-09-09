@@ -1,0 +1,34 @@
+<template id="zephyr-input">
+  <style>
+    :host {
+      display: block;
+      font-family: Arial, sans-serif;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .error {
+      color: red;
+      font-size: 0.8em;
+      margin-top: 5px;
+    }
+  </style>
+  <label for="input">{{label}}</label>
+  <input
+    id="input"
+    type="{{type}}"
+    placeholder="{{placeholder}}"
+    value="{{value}}"
+    bind="value"
+    on:input="handleInput"
+    on:blur="handleBlur"
+    required="{{required}}">
+  <div class="error" style="display: {{showError ? 'block' : 'none'}}">{{errorMessage}}</div>
+</template>

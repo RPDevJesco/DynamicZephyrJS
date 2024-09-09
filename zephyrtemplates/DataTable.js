@@ -12,8 +12,8 @@ export default class DataTable extends ZephyrJS {
     constructor() {
         super();
         this.state = {
-            dataType: 'accordion',
-            pagination: 0,
+            dataType: 'default',
+            pagination: false,
             filtering: false,
             filterValue: '',
             sorting: false,
@@ -36,6 +36,7 @@ export default class DataTable extends ZephyrJS {
                 values: []
             }
         };
+        this.debouncedFilter = this.debounce(this.applyFiltering.bind(this), 300);
     }
 
     connectedCallback() {
@@ -102,8 +103,6 @@ export default class DataTable extends ZephyrJS {
         }
 
         this.state.filteredData = [...this.state.data];
-        this.applyFiltering();
-        this.applySorting();
         this.render();
     }
 
@@ -188,219 +187,6 @@ export default class DataTable extends ZephyrJS {
         `;
     }
 
-    renderAccordionDetails(item) {
-        // Customize this method to render detailed content for each item
-        return `
-            <h3>Details for ${item.name || 'Item'}</h3>
-            <pre>${JSON.stringify(item, null, 2)}</pre>
-        `;
-    }
-
-    renderAccordionTable(data) {
-        const pageData = this.state.pagination ? this.getPaginatedData(data) : data;
-        let tableHtml = `
-            <table class="zephyr-data-table accordion">
-                <thead>
-                    <tr>
-                        <th></th>
-                        ${Object.keys(data[0] || {}).map(key =>
-            `<th class="sortable" data-column="${key}">${key}${this.getSortIndicator(key)}</th>`
-        ).join('')}
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        pageData.forEach((item, index) => {
-            const isExpanded = this.state.expandedRows.has(item.id);
-            tableHtml += `
-                <tr class="accordion-header">
-                    <td>
-                        <button class="expand-btn" data-id="${item.id}">${isExpanded ? '▼' : '▶'}</button>
-                    </td>
-                    ${Object.entries(item).map(([key, value]) =>
-                `<td>${this.state.editing ?
-                    `<input type="text" value="${value}" data-column="${key}" data-id="${item.id}" class="editable-field">` :
-                    value}</td>`
-            ).join('')}
-                </tr>
-                <tr class="accordion-content" style="display: ${isExpanded ? 'table-row' : 'none'}">
-                    <td colspan="${Object.keys(item).length + 1}">
-                        <div class="accordion-details">
-                            ${this.renderAccordionDetails(item)}
-                        </div>
-                    </td>
-                </tr>
-            `;
-        });
-
-        tableHtml += `
-                </tbody>
-            </table>
-        `;
-
-        return tableHtml;
-    }
-
-    renderTreeStructuredTable(data) {
-        const flattenedData = this.flattenTreeData(data);
-        const paginatedData = this.getPaginatedData(flattenedData);
-        const reconstructedTree = this.reconstructTree(paginatedData);
-
-        const renderNode = (node, level = 0) => {
-            const isExpanded = this.state.expandedRows.has(node.id);
-            let html = `
-                <tr class="tree-node" data-level="${level}">
-                    <td>
-                        ${node.children ? `<button class="expand-btn" data-id="${node.id}">${isExpanded ? '▼' : '▶'}</button>` : ''}
-                        ${'&nbsp;'.repeat(level * 2)}${node.name}
-                    </td>
-                    ${Object.entries(node).filter(([key]) => key !== 'children' && key !== 'name')
-                .map(([key, value]) =>
-                    `<td>${this.state.editing ?
-                        `<input type="text" value="${value}" data-column="${key}" data-id="${node.id}" class="editable-field">` :
-                        value}</td>`
-                ).join('')}
-                </tr>
-            `;
-
-            if (node.children && isExpanded) {
-                node.children.forEach(child => {
-                    html += renderNode(child, level + 1);
-                });
-            }
-
-            return html;
-        };
-
-        let tableHtml = `
-            <table class="zephyr-data-table tree-structured">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        ${Object.keys(flattenedData[0] || {}).filter(key => key !== 'children' && key !== 'name' && key !== 'level')
-            .map(key => `<th class="sortable" data-column="${key}">${key}${this.getSortIndicator(key)}</th>`).join('')}
-                    </tr>
-                </thead>
-                <tbody>
-                    ${reconstructedTree.map(node => renderNode(node)).join('')}
-                </tbody>
-            </table>
-        `;
-
-        return tableHtml;
-    }
-
-    flattenTreeData(tree, level = 0, result = []) {
-        tree.forEach(node => {
-            const flatNode = { ...node, level };
-            result.push(flatNode);
-            if (node.children) {
-                this.flattenTreeData(node.children, level + 1, result);
-            }
-        });
-        return result;
-    }
-
-    reconstructTree(flatData) {
-        const tree = [];
-        const map = {};
-
-        flatData.forEach(node => {
-            map[node.id] = { ...node, children: [] };
-        });
-
-        flatData.forEach(node => {
-            if (node.level === 0) {
-                tree.push(map[node.id]);
-            } else {
-                const parent = flatData.find(n => n.level === node.level - 1 && flatData.indexOf(n) < flatData.indexOf(node));
-                if (parent && map[parent.id]) {
-                    map[parent.id].children.push(map[node.id]);
-                }
-            }
-        });
-
-        return tree;
-    }
-
-    renderDrillDownTable(data) {
-        const pageData = this.getPaginatedData(data);
-        let tableHtml = `
-            <table class="zephyr-data-table drill-down">
-                <thead>
-                    <tr>
-                        ${Object.keys(data[0] || {}).map(key =>
-            `<th class="sortable" data-column="${key}">${key}${this.getSortIndicator(key)}</th>`
-        ).join('')}
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        pageData.forEach(item => {
-            tableHtml += `
-                <tr class="drill-down-row" data-id="${item.id}">
-                    ${Object.entries(item).map(([key, value]) =>
-                `<td>${this.state.editing ?
-                    `<input type="text" value="${value}" data-column="${key}" data-id="${item.id}" class="editable-field">` :
-                    value}</td>`
-            ).join('')}
-                </tr>
-            `;
-        });
-
-        tableHtml += `
-                </tbody>
-            </table>
-            <div id="drill-down-details" style="display: none;"></div>
-        `;
-
-        return tableHtml;
-    }
-
-    renderAggregatedTable(data) {
-        const aggregatedData = this.aggregateData(data);
-        let tableHtml = `
-            <table class="zephyr-data-table aggregated">
-                <thead>
-                    <tr>
-                        <th class="sortable" data-column="category">Category${this.getSortIndicator('category')}</th>
-                        <th class="sortable" data-column="count">Count${this.getSortIndicator('count')}</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        Object.entries(aggregatedData).forEach(([category, items]) => {
-            tableHtml += `
-                <tr>
-                    <td>${category}</td>
-                    <td>${items.length}</td>
-                    <td><button class="show-details-btn" data-category="${category}">Show Details</button></td>
-                </tr>
-            `;
-        });
-
-        tableHtml += `
-                </tbody>
-            </table>
-            <div id="aggregated-details" style="display: none;"></div>
-        `;
-
-        return tableHtml;
-    }
-
-    aggregateData(data) {
-        return data.reduce((acc, item) => {
-            const category = item[this.state.groupBy || 'category'];
-            if (!acc[category]) acc[category] = [];
-            acc[category].push(item);
-            return acc;
-        }, {});
-    }
-
     renderPagination() {
         if (!this.state.pagination) return '';
 
@@ -412,38 +198,6 @@ export default class DataTable extends ZephyrJS {
                 <button id="next-page" ${this.state.currentPage === totalPages ? 'disabled' : ''}>Next</button>
             </div>
         `;
-    }
-
-    getPaginatedData(data) {
-        if (!this.state.pagination || this.state.itemsPerPage <= 0) return data;
-        const start = (this.state.currentPage - 1) * this.state.itemsPerPage;
-        const end = start + this.state.itemsPerPage;
-        return data.slice(start, end);
-    }
-
-    changePage(direction) {
-        const totalPages = Math.ceil(this.state.filteredData.length / this.state.itemsPerPage);
-        const newPage = this.state.currentPage + direction;
-        if (newPage >= 1 && newPage <= totalPages) {
-            this.state.currentPage = newPage;
-            this.render();
-        }
-    }
-
-    groupData(data, groupBy) {
-        return data.reduce((groups, item) => {
-            const group = item[groupBy];
-            if (!groups[group]) groups[group] = [];
-            groups[group].push(item);
-            return groups;
-        }, {});
-    }
-
-    getSortIndicator(column) {
-        if (this.state.sortColumn === column) {
-            return this.state.sortDirection === 'asc' ? ' ▲' : ' ▼';
-        }
-        return '';
     }
 
     render() {
@@ -497,7 +251,7 @@ export default class DataTable extends ZephyrJS {
         // Filtering
         if (this.state.filtering) {
             const filterInput = this._shadowRoot.getElementById('filter-input');
-            filterInput.addEventListener('input', this.handleFilter.bind(this));
+            filterInput.addEventListener('input', this.handleFilterInput.bind(this));
 
             const clearFilterButton = this._shadowRoot.getElementById('clear-filter');
             clearFilterButton.addEventListener('click', this.clearFilter.bind(this));
@@ -509,14 +263,6 @@ export default class DataTable extends ZephyrJS {
             header.addEventListener('click', () => this.handleSort(header.dataset.column));
         });
 
-        // Editing
-        if (this.state.editing) {
-            const editableInputs = this._shadowRoot.querySelectorAll('.editable-field');
-            editableInputs.forEach(input => {
-                input.addEventListener('change', (e) => this.handleEdit(e.target.dataset.id, e.target.dataset.column, e.target.value));
-            });
-        }
-
         // Pagination
         const prevButton = this._shadowRoot.getElementById('prev-page');
         const nextButton = this._shadowRoot.getElementById('next-page');
@@ -527,7 +273,7 @@ export default class DataTable extends ZephyrJS {
 
         // Editing
         if (this.state.editing) {
-            const editableInputs = this._shadowRoot.querySelectorAll('input[data-column]');
+            const editableInputs = this._shadowRoot.querySelectorAll('.editable-field');
             editableInputs.forEach(input => {
                 input.addEventListener('change', (e) => this.handleEdit(e.target.dataset.id, e.target.dataset.column, e.target.value));
             });
@@ -546,117 +292,77 @@ export default class DataTable extends ZephyrJS {
             });
         }
 
-        // Grouping
-        if (this.state.grouping) {
-            const groupSelects = this._shadowRoot.querySelectorAll('.group-select');
-            groupSelects.forEach(select => {
-                select.addEventListener('change', (e) => this.handleGroupSelect(e.target.dataset.group, e.target.checked));
-            });
-        }
-
         // Exporting
         const exportButtons = this._shadowRoot.querySelectorAll('.export-btn');
         exportButtons.forEach(btn => {
             btn.addEventListener('click', (e) => this.handleExport(e.target.dataset.format));
         });
-
-        // Add listeners for expand buttons (accordion and tree-structured)
-        const expandButtons = this._shadowRoot.querySelectorAll('.expand-btn');
-        expandButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => this.handleExpand(e.target.dataset.id));
-        });
-
-        // Add listeners for drill-down rows
-        const drillDownRows = this._shadowRoot.querySelectorAll('.drill-down-row');
-        drillDownRows.forEach(row => {
-            row.addEventListener('click', (e) => this.handleDrillDown(e.target.closest('tr').dataset.id));
-        });
-
-        // Add listeners for show details buttons (aggregated)
-        const showDetailsButtons = this._shadowRoot.querySelectorAll('.show-details-btn');
-        showDetailsButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => this.handleShowAggregatedDetails(e.target.dataset.category));
-        });
     }
 
-    handleExpand(id) {
-        if (this.state.expandedRows.has(id)) {
-            this.state.expandedRows.delete(id);
-        } else {
-            this.state.expandedRows.add(id);
-        }
-        this.render();
+    handleFilterInput(event) {
+        this.state.filterValue = event.target.value.toLowerCase();
+        this.debouncedFilter();
     }
 
-    handleDrillDown(id) {
-        const item = this.state.filteredData.find(item => item.id == id);
-        if (item) {
-            const detailsDiv = this._shadowRoot.getElementById('drill-down-details');
-            detailsDiv.innerHTML = `
-                <h3>Details for ${item.name}</h3>
-                <pre>${JSON.stringify(item, null, 2)}</pre>
-            `;
-            detailsDiv.style.display = 'block';
-        }
-    }
-
-    handleShowAggregatedDetails(category) {
-        const aggregatedData = this.aggregateData(this.state.filteredData);
-        const items = aggregatedData[category];
-        if (items) {
-            const detailsDiv = this._shadowRoot.getElementById('aggregated-details');
-            detailsDiv.innerHTML = `
-                <h3>Details for ${category}</h3>
-                <table>
-                    <thead>
-                        <tr>${Object.keys(items[0]).map(key => `<th>${key}</th>`).join('')}</tr>
-                    </thead>
-                    <tbody>
-                        ${items.map(item => `
-                            <tr>${Object.values(item).map(value => `<td>${value}</td>`).join('')}</tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            `;
-            detailsDiv.style.display = 'block';
-        }
-    }
-
-    handleFilter(event) {
-        const filterValue = event.target.value.toLowerCase();
-        this.state.filterValue = filterValue;
-        this.applyFiltering(filterValue);
-        this.state.currentPage = 1; // Reset to first page when filtering
-        this.render();
+    applyFiltering() {
+        const filterValue = this.state.filterValue.toLowerCase();
+        this.state.filteredData = this.state.data.filter(item =>
+            Object.values(item).some(value =>
+                String(value).toLowerCase().includes(filterValue)
+            )
+        );
+        this.updateTableContent();
     }
 
     clearFilter() {
         this.state.filterValue = '';
+        const filterInput = this._shadowRoot.getElementById('filter-input');
+        if (filterInput) {
+            filterInput.value = '';
+        }
         this.state.filteredData = [...this.state.data];
-        this.state.currentPage = 1;
-        this.render();
+        this.updateTableContent();
     }
 
-    applyFiltering(filterValue = this.state.filterValue) {
-        const filterRecursively = (items) => {
-            return items.filter(item => {
-                const matches = Object.entries(item).some(([key, value]) =>
-                    key !== 'children' && String(value).toLowerCase().includes(filterValue.toLowerCase())
-                );
-                if (item.children) {
-                    item.children = filterRecursively(item.children);
-                    return item.children.length > 0 || matches;
-                }
-                return matches;
-            });
-        };
+    updateTableContent() {
+        const tableBody = this._shadowRoot.querySelector('.zephyr-data-table tbody');
+        if (!tableBody) return;
 
-        this.state.filteredData = filterRecursively([...this.state.data]);
-        this.state.currentPage = 1; // Reset to first page when filtering
+        const pageData = this.getPaginatedData(this.state.filteredData);
+
+        let tableHtml = '';
+        pageData.forEach(item => {
+            tableHtml += `
+                <tr>
+                    ${this.state.multiSelect ? `<td><input type="checkbox" class="row-select" data-id="${item.id}" ${this.state.selectedRows.has(item.id) ? 'checked' : ''}></td>` : ''}
+                    ${Object.entries(item).map(([key, value]) =>
+                `<td>${this.state.editing ?
+                    `<input type="text" value="${value}" data-column="${key}" data-id="${item.id}" class="editable-field">` :
+                    value}</td>`
+            ).join('')}
+                </tr>
+            `;
+        });
+
+        tableBody.innerHTML = tableHtml;
+
+        this.updatePagination();
+        this.addEventListeners();
+    }
+
+    updatePagination() {
+        const paginationElement = this._shadowRoot.querySelector('.pagination');
+        if (!paginationElement) return;
+
+        const totalPages = Math.ceil(this.state.filteredData.length / this.state.itemsPerPage);
+        paginationElement.innerHTML = `
+            <button id="prev-page" ${this.state.currentPage === 1 ? 'disabled' : ''}>Previous</button>
+            <span>Page ${this.state.currentPage} of ${totalPages}</span>
+            <button id="next-page" ${this.state.currentPage === totalPages ? 'disabled' : ''}>Next</button>
+        `;
     }
 
     handleSort(column) {
-        console.log('Sorting by:', column);  // Debug log
         if (this.state.sortColumn === column) {
             this.state.sortDirection = this.state.sortDirection === 'asc' ? 'desc' : 'asc';
         } else {
@@ -664,48 +370,35 @@ export default class DataTable extends ZephyrJS {
             this.state.sortDirection = 'asc';
         }
         this.applySorting();
-        this.render();
+        this.updateTableContent();
     }
 
     applySorting() {
         if (this.state.sortColumn) {
-            const sortRecursively = (items) => {
-                return items.sort((a, b) => {
-                    const aValue = a[this.state.sortColumn];
-                    const bValue = b[this.state.sortColumn];
+            this.state.filteredData.sort((a, b) => {
+                const aValue = a[this.state.sortColumn];
+                const bValue = b[this.state.sortColumn];
 
-                    let comparison;
-                    if (typeof aValue === 'number' && typeof bValue === 'number') {
-                        comparison = aValue - bValue;
-                    } else {
-                        comparison = String(aValue).localeCompare(String(bValue));
-                    }
+                let comparison;
+                if (typeof aValue === 'number' && typeof bValue === 'number') {
+                    comparison = aValue - bValue;
+                } else {
+                    comparison = String(aValue).localeCompare(String(bValue));
+                }
 
-                    return this.state.sortDirection === 'asc' ? comparison : -comparison;
-                }).map(item => {
-                    if (item.children) {
-                        item.children = sortRecursively(item.children);
-                    }
-                    return item;
-                });
-            };
-
-            this.state.filteredData = sortRecursively([...this.state.filteredData]);
-            this.state.data = sortRecursively([...this.state.data]);
+                return this.state.sortDirection === 'asc' ? comparison : -comparison;
+            });
         }
     }
 
-    handleGroupSelect(group, isChecked) {
-        const groupedData = this.groupData(this.state.filteredData, this.state.groupBy);
-        const groupItems = groupedData[group];
-        groupItems.forEach(item => {
-            if (isChecked) {
-                this.state.selectedRows.add(item.id);
-            } else {
-                this.state.selectedRows.delete(item.id);
-            }
-        });
-        this.render();
+    handleEdit(id, column, value) {
+        const item = this.state.data.find(item => item.id == id);
+        if (item) {
+            item[column] = value;
+            this.applyFiltering();
+            this.applySorting();
+            this.updateTableContent();
+        }
     }
 
     handleSelectAll(event) {
@@ -718,7 +411,7 @@ export default class DataTable extends ZephyrJS {
                 this.state.selectedRows.delete(item.id);
             }
         });
-        this.render();
+        this.updateTableContent();
     }
 
     handleRowSelect(id, isChecked) {
@@ -727,28 +420,16 @@ export default class DataTable extends ZephyrJS {
         } else {
             this.state.selectedRows.delete(id);
         }
-        this.render();
+        this.updateTableContent();
     }
 
-    handleEdit(id, column, value) {
-        console.log('Editing:', id, column, value);  // Debug log
-        const updateRecursively = (items) => {
-            return items.map(item => {
-                if (item.id == id) {
-                    item[column] = value;
-                }
-                if (item.children) {
-                    item.children = updateRecursively(item.children);
-                }
-                return item;
-            });
-        };
-
-        this.state.data = updateRecursively([...this.state.data]);
-        this.state.filteredData = updateRecursively([...this.state.filteredData]);
-        this.applyFiltering();
-        this.applySorting();
-        this.render();
+    changePage(direction) {
+        const totalPages = Math.ceil(this.state.filteredData.length / this.state.itemsPerPage);
+        const newPage = this.state.currentPage + direction;
+        if (newPage >= 1 && newPage <= totalPages) {
+            this.state.currentPage = newPage;
+            this.updateTableContent();
+        }
     }
 
     handleExport(format) {
@@ -811,6 +492,42 @@ export default class DataTable extends ZephyrJS {
                 ${this.state.export.map(format => `<button class="export-btn" data-format="${format}">Export ${format.toUpperCase()}</button>`).join('')}
             </div>
         `;
+    }
+
+    getPaginatedData(data) {
+        if (!this.state.pagination || this.state.itemsPerPage <= 0) return data;
+        const start = (this.state.currentPage - 1) * this.state.itemsPerPage;
+        const end = start + this.state.itemsPerPage;
+        return data.slice(start, end);
+    }
+
+    getSortIndicator(column) {
+        if (this.state.sortColumn === column) {
+            return this.state.sortDirection === 'asc' ? ' ▲' : ' ▼';
+        }
+        return '';
+    }
+
+    debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Utility method to group data
+    groupData(data, groupBy) {
+        return data.reduce((groups, item) => {
+            const group = item[groupBy];
+            if (!groups[group]) groups[group] = [];
+            groups[group].push(item);
+            return groups;
+        }, {});
     }
 }
 

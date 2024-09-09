@@ -31,6 +31,7 @@ window.Themes = Themes;
 window.setTheme = setTheme;
 
 // Import all core templates
+import DynamicInput from "../zephyrtemplates/DynamicInput.js";
 import DynamicButton from "../zephyrtemplates/DynamicButton.js";
 import MarkdownRenderer from "../zephyrtemplates/MarkdownRenderer.js";
 import MarkdownEditor from "../zephyrtemplates/MarkdownEditor.js";
