@@ -106,10 +106,3 @@ The component includes appropriate ARIA attributes to ensure accessibility for a
 ## Browser Support
 
 This component uses modern web technologies and should work in all evergreen browsers.
-
-## TODO:
-### Core components to create.
-- `ZephyrTooltip`: A tooltip component that can be easily attached to any element, showing context-sensitive information on hover or focus.
-- `ZephyrTabs`: A tabbed interface component for organizing content into different sections, with smooth transitions between tabs.
-- `ZephyrAccordion`: An accordion-style component for collapsible content sections, useful for FAQs or multi-section interfaces.
-- 
