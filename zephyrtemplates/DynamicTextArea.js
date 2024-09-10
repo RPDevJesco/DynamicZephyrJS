@@ -74,13 +74,15 @@ export default class DynamicTextArea extends ZephyrJS {
         });
     }
 
-    handleInput() {
+    handleInput(event) {
         const editor = this._shadowRoot.querySelector(`#${this._uniqueId}-editor`);
+        let value;
         if (this._state.toolbar) {
-            this._state.value = editor.innerHTML;  // Store the formatted HTML content for rich text
+            value = editor.innerHTML;
         } else {
-            this._state.value = editor.value;  // Store the plain text content for standard text
+            value = editor.value;
         }
+        this._state.value = value;
 
         // Auto-resize functionality
         if (this._state.expand) {
@@ -91,6 +93,32 @@ export default class DynamicTextArea extends ZephyrJS {
         // Handle character/word counter
         if (this._state.charCounter || this._state.wordCounter) {
             this.updateCounter();
+        }
+
+        // Dispatch a custom event
+        this.dispatchEvent(new CustomEvent('zephyr-textarea-change', {
+            bubbles: true,
+            composed: true,
+            detail: { name: this.getAttribute('name'), value: value }
+        }));
+
+        // Prevent default to avoid any potential focus issues
+        event.preventDefault();
+    }
+
+    setValue(value) {
+        this._state.value = value;
+        const editor = this._shadowRoot.querySelector(`#${this._uniqueId}-editor`);
+        if (editor) {
+            if (this._state.toolbar) {
+                editor.innerHTML = value;
+            } else {
+                editor.value = value;
+            }
+            // Maintain focus and cursor position
+            const cursorPosition = editor.selectionStart;
+            editor.focus();
+            editor.setSelectionRange(cursorPosition, cursorPosition);
         }
     }
 

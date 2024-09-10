@@ -103,6 +103,13 @@ export default class DynamicInput extends ZephyrJS {
         if (this._state.type === 'range') {
             this._shadowRoot.querySelector(`#${this._uniqueId}-value`).textContent = value;
         }
+
+        // Dispatch a custom event
+        this.dispatchEvent(new CustomEvent('zephyr-input-change', {
+            bubbles: true,
+            composed: true,
+            detail: { name:  this.getAttribute('name'), value: value, isValid: isValid, errorMessage: errorMessage }
+        }));
     }
 
     updateValidationUI(isValid, errorMessage) {
