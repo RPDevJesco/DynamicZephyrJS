@@ -241,15 +241,20 @@ This project has additional documentation available in the following sections:
 
 ## Templates
 - [ZephyrButton](Documentation/templates/ZephyrButton.md)
+- [ZephyrCard](Documentation/templates/ZephyrCard.md)
+- [ZephyrDataTable](Documentation/templates/ZephyrDataTable.md)
+- [ZephyrDropdown](Documentation/templates/ZephyrDropdown.md)
 - [ZephyrFocusCard](Documentation/templates/ZephyrFocusCard.md)
+- [ZephyrForm](Documentation/templates/ZephyrForm.md)
 - [ZephyrGridLayout](Documentation/templates/ZephyrGridLayout.md)
+- [ZephyrInput](Documentation/templates/ZephyrInput.md)
 - [ZephyrMarkdownEditor](Documentation/templates/ZephyrMarkdownEditor.md)
 - [ZephyrMarkdownRenderer](Documentation/templates/ZephyrMarkdownRenderer.md)
 - [ZephyrMarkdownShowcase](Documentation/templates/ZephyrMarkdownShowcase.md)
-- [ZephyrSlideReveal](Documentation/templates/ZephyrSlideReveal.md)
-- [ZephyrCard](Documentation/templates/ZephyrCard.md)
 - [ZephyrModal](Documentation/templates/ZephyrModal.md)
-- [ZephyrDataTable](Documentation/templates/ZephyrDataTable.md)
+- [ZephyrNavigation](Documentation/templates/ZephyrNavigation.md)
+- [ZephyrSlideReveal](Documentation/templates/ZephyrSlideReveal.md)
+- [ZephyrTextArea](Documentation/templates/ZephyrTextArea.md)
 
 ## Zephyr Core
 - [CPPTOKENS](Documentation/zephyrcore/CPPTOKENS.md)
