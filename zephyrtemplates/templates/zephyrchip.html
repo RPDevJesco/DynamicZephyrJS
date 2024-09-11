@@ -1,0 +1,51 @@
+<template id="zephyr-chip">
+  <style>
+    :host {
+      display: inline-block;
+      margin: 4px;
+    }
+    .zephyr-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 16px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+    .zephyr-chip.default {
+      background-color: var(--chip-bg-color, #e0e0e0);
+      color: var(--chip-text-color, #333);
+    }
+    .zephyr-chip.selected {
+      background-color: var(--chip-selected-bg-color, #2196f3);
+      color: var(--chip-selected-text-color, #fff);
+    }
+    .zephyr-chip.draggable:hover {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .zephyr-chip.dragging {
+      opacity: 0.6;
+    }
+    .chip-icon {
+      margin-right: 8px;
+    }
+    .chip-close {
+      margin-left: 8px;
+      cursor: pointer;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    :host(.new-chip) .zephyr-chip {
+      animation: popIn 0.3s ease-out;
+    }
+  </style>
+  <div class="{{chipClasses}}">
+    <span class="chip-icon" if="{{icon}}">{{icon}}</span>
+    <span class="chip-label">{{label}}</span>
+    <span class="chip-close" if="{{closable}}">&times;</span>
+  </div>
+</template>

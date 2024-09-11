@@ -10,73 +10,103 @@
     <link rel="stylesheet" href="./zephyrcss/zephyr.css">
 </head>
 <style>
-#box {
-    width: 50%; /* Starting width */
-    height: 100px;
-    background-color: lightblue;
-    margin: 20px 0;
-}
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    #addChip {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    h1, h2 { color: #333; }
+    .test-section { border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; }
 </style>
 <body>
 
 <adaptive-grid-layout>
-    <!-- Toggle button with text on the right and event binding -->
-    <zephyr-button
-            id="myButton"
-            type="toggle"
-            value="Click me!"
-            toggle-on-text="ON"
-            toggle-off-text="OFF"
-            text-position="right"
-            onzephyr-change="setMyTheme(event)">
-    </zephyr-button>
+    <div class="test-section">
+        <h2>ZephyrChip Test</h2>
+        <zephyr-chip id="testChip" label="Test Chip" color="blue" closable="true"></zephyr-chip>
+        <button id="toggleChipSelect">Toggle Select</button>
+        <button id="changeChipColor">Change Color</button>
+        <button id="changeChipLabel">Change Label</button>
+    </div>
 
-    <zephyr-input
-            label="Adjust Box Width"
-            type="range"
-            min="10"
-            max="100"
-            step="1"
-            value="50">
-    </zephyr-input>
+    <div class="test-section">
+        <h2>ZephyrToast Test</h2>
+        <zephyr-toast id="testToast" message="This is a test toast" action="Dismiss"></zephyr-toast>
+        <button id="showToast">Show Toast</button>
+    </div>
 
-    <div id="box"></div>
+    <div class="test-section">
+        <h2>ZephyrContextMenu Test</h2>
+        <div id="contextMenuTarget" style="border: 1px solid #999; padding: 20px; cursor: context-menu;">
+            Right-click here to open context menu
+        </div>
+        <zephyr-context-menu id="testContextMenu"></zephyr-context-menu>
+    </div>
 
-    <zephyr-input
-            label="Username"
-            type="text"
-            placeholder="Enter your username">
-    </zephyr-input>
+    <div class="test-section">
+        <h2>ZephyrChipContainer Test</h2>
+        <zephyr-chip-container id="testChipContainer"></zephyr-chip-container>
+        <button id="addChip">Add Chip</button>
+    </div>
 
 </adaptive-grid-layout>
 
 <script>
-    function setMyTheme(event) {
-        const isDarkMode = event.detail.checked;
-        if (isDarkMode) {
-            setTheme(Themes.HELLFIRE);
-        } else {
-            setTheme(Themes.FANTASY);
-        }
-    }
+    document.addEventListener('DOMContentLoaded', () => {
+        // ZephyrChip Test
+        const testChip = document.getElementById('testChip');
+        document.getElementById('toggleChipSelect').addEventListener('click', () => {
+            testChip.setAttribute('selected', testChip.getAttribute('selected') !== 'true');
+        });
+        document.getElementById('changeChipColor').addEventListener('click', () => {
+            const colors = ['blue', 'green', 'red', 'yellow'];
+            const currentColor = testChip.getAttribute('color');
+            const nextColor = colors[(colors.indexOf(currentColor) + 1) % colors.length];
+            testChip.setAttribute('color', nextColor);
+        });
+        document.getElementById('changeChipLabel').addEventListener('click', () => {
+            testChip.setAttribute('label', 'New Label ' + Math.floor(Math.random() * 100));
+        });
 
-    // Function to generate sample data
-    function generateSampleData() {
-        const categories = ['Electronics', 'Clothing', 'Books', 'Home & Garden'];
-        return Array.from({ length: 20 }, (_, i) => ({
-            id: i + 1,
-            name: `Product ${i + 1}`,
-            category: categories[Math.floor(Math.random() * categories.length)],
-            price: Math.floor(Math.random() * 1000) + 10,
-            stock: Math.floor(Math.random() * 100)
-        }));
-    }
+        // ZephyrToast Test
+        const testToast = document.getElementById('testToast');
+        document.getElementById('showToast').addEventListener('click', () => {
+            testToast.show();
+        });
 
-    // Attach slider event listener
-    document.querySelector('zephyr-input').addEventListener('input', (event) => {
-        const sliderValue = event.target._state.value;
-        const box = document.getElementById('box');
-        box.style.width = sliderValue + '%'; // Adjust box width based on slider value
+        // ZephyrContextMenu Test
+        const testContextMenu = document.getElementById('testContextMenu');
+        const contextMenuTarget = document.getElementById('contextMenuTarget');
+        contextMenuTarget.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            const items = [
+                { label: 'Option 1', action: () => console.log('Option 1 selected') },
+                { label: 'Option 2', action: () => console.log('Option 2 selected') },
+                { label: 'Option 3', action: () => console.log('Option 3 selected') }
+            ];
+            testContextMenu.show(e.clientX, e.clientY, items);
+        });
+
+        // ZephyrChipContainer Test
+        const testChipContainer = document.getElementById('testChipContainer');
+        document.getElementById('addChip').addEventListener('click', () => {
+            const label = 'Chip ' + Math.floor(Math.random() * 100);
+            testChipContainer.addChip(label, { color: 'blue', closable: true, draggable: true });
+        });
     });
 </script>
 </body>

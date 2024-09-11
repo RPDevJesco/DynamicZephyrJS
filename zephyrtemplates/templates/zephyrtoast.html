@@ -1,0 +1,42 @@
+<template id="zephyr-toast">
+  <style>
+    :host {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+    }
+    .toast {
+      background-color: var(--toast-bg-color, #333);
+      color: var(--toast-text-color, #fff);
+      padding: 12px 20px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      transition: opacity 0.3s, transform 0.3s;
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    .toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toast-message {
+      margin-right: 20px;
+    }
+    .toast-action {
+      background: none;
+      border: none;
+      color: var(--toast-action-color, #4CAF50);
+      cursor: pointer;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  </style>
+  <div class="toast {{visible ? 'visible' : ''}}">
+    <span class="toast-message">{{message}}</span>
+    <button class="toast-action">{{action}}</button>
+  </div>
+</template>

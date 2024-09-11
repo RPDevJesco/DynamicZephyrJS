@@ -44,3 +44,7 @@ import DynamicCard from "../zephyrtemplates/DynamicCard.js";
 import DataTable from "../zephyrtemplates/DataTable.js";
 import DynamicModalComponent from "../zephyrtemplates/DynamicModalComponent.js";
 import DynamicForm from "../zephyrtemplates/DynamicForm.js";
+import ZephyrChip from "../zephyrtemplates/ZephyrChip.js";
+import ZephyrToast from "../zephyrtemplates/ZephyrToast.js";
+import ZephyrContextMenu from "../zephyrtemplates/ZephyrContextMenu.js";
+import ZephyrChipContainer from "../zephyrtemplates/ZephyrChipContainer.js";
