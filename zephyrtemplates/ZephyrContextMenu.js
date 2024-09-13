@@ -1,6 +1,6 @@
 import ZephyrJS, { defineCustomElement } from "../zephyrcore/zephyr.js";
 
-class ZephyrContextMenu extends ZephyrJS {
+export default class ZephyrContextMenu extends ZephyrJS {
     static isCoreTemplate = true;
 
     constructor() {
@@ -42,5 +42,3 @@ class ZephyrContextMenu extends ZephyrJS {
 }
 
 defineCustomElement('zephyr-context-menu', ZephyrContextMenu);
-
-export default ZephyrContextMenu;

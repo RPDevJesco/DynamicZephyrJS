@@ -131,9 +131,9 @@ export default class MarkdownRenderer extends ZephyrJS {
                 font-weight: 600;
                 line-height: 1.25;
             }
-            .markdown-content h1 { font-size: 2em; }
-            .markdown-content h2 { font-size: 1.5em; }
-            .markdown-content h3 { font-size: 1.25em; }
+            .markdown-content h1 { font-size: var(--base-font-size); }
+            .markdown-content h2 { font-size: var(--base-font-size); }
+            .markdown-content h3 { font-size: var(--base-font-size); }
             .markdown-content ul {
                 padding-left: 2em;
                 margin-bottom: 16px;
@@ -159,7 +159,7 @@ export default class MarkdownRenderer extends ZephyrJS {
             }
             code {
                 font-family: 'Courier New', Courier, monospace;
-                font-size: 0.9em;
+                font-size: var(--base-font-size);
             }
             .keyword { color: var(--markdown-keyword); }
             .string { color: var(--markdown-string); }

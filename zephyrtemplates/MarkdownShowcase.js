@@ -137,7 +137,7 @@ export default class MarkdownShowcase extends ZephyrJS {
                 }
                 code {
                     font-family: 'Courier New', Courier, monospace;
-                    font-size: 0.9em;
+                    font-size: var(--base-font-size);
                 }
                 ul {
                     padding-left: 20px;

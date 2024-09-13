@@ -1,0 +1,79 @@
+<template id="vision-accessibility-adjuster-template">
+  <style>
+    :host {
+      display: block;
+      font-family: Arial, sans-serif;
+      padding: 1rem;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    h2 {
+      font-size: 1.2rem;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .control {
+      margin-bottom: 0.8rem;
+    }
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+    }
+    input[type="range"] {
+      width: 100%;
+      margin-top: 0.2rem;
+    }
+    .toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    input[type="checkbox"] {
+      margin-left: 0.5rem;
+    }
+    .value-display {
+      font-weight: bold;
+      min-width: 2.5em;
+      text-align: right;
+    }
+  </style>
+
+  <h2>Vision Accessibility</h2>
+
+  <div class="control">
+    <label for="font-size-slider">
+      Font Size
+      <span class="value-display">{{fontSize}}px</span>
+    </label>
+    <input type="range" id="font-size-slider" min="12" max="32" step="1" bind="{{fontSize}}" on="input:{{handleFontSizeChange}}">
+  </div>
+
+  <div class="control">
+    <label for="contrast-slider">
+      Contrast
+      <span class="value-display">{{contrast}}%</span>
+    </label>
+    <input type="range" id="contrast-slider" min="50" max="200" step="10" bind="{{contrast}}" on="input:{{handleContrastChange}}">
+  </div>
+
+  <div class="control toggle">
+    <label for="color-blind-toggle">
+      Color Blind Mode
+      <input type="checkbox" id="color-blind-toggle" bind="{{colorBlindMode}}" on="change:{{handleColorBlindToggle}}">
+    </label>
+  </div>
+
+  <div class="control toggle">
+    <label for="reduced-motion-toggle">
+      Reduced Motion
+      <input type="checkbox" id="reduced-motion-toggle" bind="{{reducedMotion}}" on="change:{{handleReducedMotionToggle}}">
+    </label>
+  </div>
+</template>

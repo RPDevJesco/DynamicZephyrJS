@@ -10,104 +10,188 @@
     <link rel="stylesheet" href="./zephyrcss/zephyr.css">
 </head>
 <style>
+    :root {
+        --base-font-size: 16px;
+        --contrast-filter: contrast(100%);
+        --color-blind-filter: none;
+    }
+
     body {
-        font-family: Arial, sans-serif;
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
+        font-size: var(--base-font-size);
+        filter: var(--contrast-filter) var(--color-blind-filter);
     }
-    #addChip {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 4px;
+
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
     }
-    h1, h2 { color: #333; }
-    .test-section { border: 1px solid #ddd; padding: 20px; margin-bottom: 20px; }
 </style>
 <body>
+<vision-accessibility-adjuster></vision-accessibility-adjuster>
+<zephyr-grid-layout>
+    <zephyr-navigation
+            type="navbar"
+            collapsible="true"
+            animation="fade"
+            items='[
+            {"label": "Home", "href": "/"},
+            {"label": "Blog", "href": "/blog"},
+            {"label": "About", "href": "/about"},
+            {"label": "Contact", "href": "/contact"}
+          ]'>
+    </zephyr-navigation>
 
-<adaptive-grid-layout>
-    <div class="test-section">
-        <h2>ZephyrChip Test</h2>
-        <zephyr-chip id="testChip" label="Test Chip" color="blue" closable="true"></zephyr-chip>
-        <button id="toggleChipSelect">Toggle Select</button>
-        <button id="changeChipColor">Change Color</button>
-        <button id="changeChipLabel">Change Label</button>
-    </div>
+    <h1>Welcome to ZephyrBlog</h1>
 
-    <div class="test-section">
-        <h2>ZephyrToast Test</h2>
-        <zephyr-toast id="testToast" message="This is a test toast" action="Dismiss"></zephyr-toast>
-        <button id="showToast">Show Toast</button>
-    </div>
-
-    <div class="test-section">
-        <h2>ZephyrContextMenu Test</h2>
-        <div id="contextMenuTarget" style="border: 1px solid #999; padding: 20px; cursor: context-menu;">
-            Right-click here to open context menu
+    <zephyr-card>
+        <div slot="front">
+            <h2>Latest Post</h2>
+            <p>Check out our most recent blog post!</p>
         </div>
-        <zephyr-context-menu id="testContextMenu"></zephyr-context-menu>
-    </div>
+        <div slot="back">
+            <h3>How to Use ZephyrJS</h3>
+            <p>Click to read more...</p>
+        </div>
+    </zephyr-card>
 
-    <div class="test-section">
-        <h2>ZephyrChipContainer Test</h2>
-        <zephyr-chip-container id="testChipContainer"></zephyr-chip-container>
-        <button id="addChip">Add Chip</button>
-    </div>
+    <zephyr-button type="button" value="Subscribe to Newsletter" clicked-text="Subscribed!"></zephyr-button>
 
-</adaptive-grid-layout>
+    <zephyr-data-table
+            id="blogPosts"
+            data-type="default"
+            pagination="5"
+            filtering="true"
+            sorting="true"
+            data-source="generateMockBlogPosts">
+    </zephyr-data-table>
 
+    <zephyr-markdown-renderer sections='[
+      {
+        "header": "Introduction",
+        "content": "This is the introduction to our blog post..."
+      },
+      {
+        "header": "Main Content",
+        "content": "Heres the main content of our blog post..."
+    },
+    {
+    "header": "Conclusion",
+    "content": "In conclusion..."
+    }
+    ]'></zephyr-markdown-renderer>
+
+    <zephyr-slide-reveal orientation="horizontal" reveal-percentage="50">
+        <img slot="background" src="https://www.shutterstock.com/image-vector/before-red-grunge-rubber-stamp-260nw-2099183326.jpg" alt="Before Image">
+        <img slot="foreground" src="https://t3.ftcdn.net/jpg/04/82/11/36/360_F_482113620_cfEynhyY7LMhnoJPo33Y8kNWImZP6MiE.jpg" alt="After Image">
+    </zephyr-slide-reveal>
+
+    <h3>Leave a Comment</h3>
+    <zephyr-textarea
+            label="Your Comment"
+            placeholder="Share your thoughts..."
+            toolbar="true"
+            char-counter
+            maxlength="500">
+    </zephyr-textarea>
+    <zephyr-button type="button" value="Submit Comment"></zephyr-button>
+
+    <zephyr-markdown-showcase sections='[
+      {
+        "header": "Our Story",
+        "content": "ZephyrBlog started as a simple idea..."
+      },
+      {
+        "header": "Our Team",
+        "content": "Meet the people behind ZephyrBlog..."
+      },
+      {
+        "header": "Our Mission",
+        "content": "We aim to provide the best blogging experience..."
+      }
+    ]'></zephyr-markdown-showcase>
+
+    <zephyr-form id="contactForm">
+        <script type="application/json">
+            {
+                "steps": [
+                    {
+                        "fields": [
+                            { "type": "text", "name": "name", "label": "Name", "required": true },
+                            { "type": "email", "name": "email", "label": "Email", "required": true },
+                            { "type": "textarea", "name": "message", "label": "Message", "required": true }
+                        ]
+                    }
+                ],
+                "events": {
+                    "onSubmit": "handleFormSubmit"
+                }
+            }
+        </script>
+    </zephyr-form>
+
+    <zephyr-modal id="newsletterModal" modal-type="info" modal-trigger="click">
+        <h2 slot="header">Subscribe to Our Newsletter</h2>
+        <zephyr-input type="email" label="Email Address" placeholder="Enter your email"></zephyr-input>
+        <zephyr-button type="button" value="Subscribe"></zephyr-button>
+    </zephyr-modal>
+
+    <zephyr-toast id="notificationToast" message="New blog post published!" action="Read Now"></zephyr-toast>
+
+    <zephyr-context-menu id="blogPostMenu"></zephyr-context-menu>
+</zephyr-grid-layout>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // ZephyrChip Test
-        const testChip = document.getElementById('testChip');
-        document.getElementById('toggleChipSelect').addEventListener('click', () => {
-            testChip.setAttribute('selected', testChip.getAttribute('selected') !== 'true');
-        });
-        document.getElementById('changeChipColor').addEventListener('click', () => {
-            const colors = ['blue', 'green', 'red', 'yellow'];
-            const currentColor = testChip.getAttribute('color');
-            const nextColor = colors[(colors.indexOf(currentColor) + 1) % colors.length];
-            testChip.setAttribute('color', nextColor);
-        });
-        document.getElementById('changeChipLabel').addEventListener('click', () => {
-            testChip.setAttribute('label', 'New Label ' + Math.floor(Math.random() * 100));
+        const blogPostMenu = document.getElementById('blogPostMenu');
+
+        // Add a click event listener to the document to show the context menu
+        document.addEventListener('click', (event) => {
+            // Check if the clicked element is a blog post item
+            if (event.target.closest('.blog-post-item')) {
+                event.preventDefault();
+                blogPostMenu.show(event.clientX, event.clientY, [
+                    { label: 'Share', action: 'share' },
+                    { label: 'Save for Later', action: 'save' },
+                    { label: 'Report', action: 'report' }
+                ]);
+            }
         });
 
-        // ZephyrToast Test
-        const testToast = document.getElementById('testToast');
-        document.getElementById('showToast').addEventListener('click', () => {
-            testToast.show();
-        });
-
-        // ZephyrContextMenu Test
-        const testContextMenu = document.getElementById('testContextMenu');
-        const contextMenuTarget = document.getElementById('contextMenuTarget');
-        contextMenuTarget.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-            const items = [
-                { label: 'Option 1', action: () => console.log('Option 1 selected') },
-                { label: 'Option 2', action: () => console.log('Option 2 selected') },
-                { label: 'Option 3', action: () => console.log('Option 3 selected') }
-            ];
-            testContextMenu.show(e.clientX, e.clientY, items);
-        });
-
-        // ZephyrChipContainer Test
-        const testChipContainer = document.getElementById('testChipContainer');
-        document.getElementById('addChip').addEventListener('click', () => {
-            const label = 'Chip ' + Math.floor(Math.random() * 100);
-            testChipContainer.addChip(label, { color: 'blue', closable: true, draggable: true });
+        // Handle menu item selection
+        blogPostMenu.addEventListener('menuItemSelected', (event) => {
+            console.log('Selected action:', event.detail.item.action);
+            // Implement the action handling here
         });
     });
+
+    function generateMockBlogPosts() {
+        return [
+            {
+                id: 1,
+                title: "Getting Started with ZephyrJS",
+                excerpt: "Learn how to build dynamic web components with ZephyrJS...",
+                date: "2024-03-15",
+                author: "Jane Doe"
+            },
+            {
+                id: 2,
+                title: "Creating Responsive Layouts with ZephyrGridLayout",
+                excerpt: "Discover the power of adaptive grid layouts in your web applications...",
+                date: "2024-03-20",
+                author: "John Smith"
+            },
+            {
+                id: 3,
+                title: "Enhancing User Experience with ZephyrModal",
+                excerpt: "Explore the various ways to use modal dialogs in your web app...",
+                date: "2024-03-25",
+                author: "Emily Johnson"
+            }
+        ];
+    }
 </script>
 </body>
 </html>

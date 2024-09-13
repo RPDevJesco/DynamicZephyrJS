@@ -174,7 +174,7 @@ export default class DynamicTextArea extends ZephyrJS {
                         border: none;
                         border-radius: 3px;
                     }
-                    .counter { font-size: 0.8em; margin-top: 5px; }
+                    .counter { font-size: var(--base-font-size); margin-top: 5px; }
                 </style>
 
                 <label for="${this._uniqueId}-editor">${label}</label>
@@ -197,7 +197,7 @@ export default class DynamicTextArea extends ZephyrJS {
                         resize: none;
                     }
                     textarea:focus { border-color: #007bff; }
-                    .counter { font-size: 0.8em; margin-top: 5px; }
+                    .counter { font-size: var(--base-font-size); margin-top: 5px; }
                 </style>
 
                 <label for="${this._uniqueId}-editor">${label}</label>

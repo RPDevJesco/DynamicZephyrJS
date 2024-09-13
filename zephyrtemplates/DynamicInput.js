@@ -139,7 +139,7 @@ export default class DynamicInput extends ZephyrJS {
                     label { display: block; margin-bottom: 5px; }
                     input[type="range"] { width: 100%; }
                     .range-value { margin-top: 5px; font-weight: bold; }
-                    .error { color: red; font-size: 0.8em; margin-top: 5px; display: none; }
+                    .error { color: red; font-size: var(--base-font-size); margin-top: 5px; display: none; }
                 </style>
                 <label for="${this._uniqueId}">${label}</label>
                 <input
@@ -167,7 +167,7 @@ export default class DynamicInput extends ZephyrJS {
                         outline: none;
                     }
                     input:focus { border-color: #007bff; }
-                    .error { color: red; font-size: 0.8em; margin-top: 5px; display: none; }
+                    .error { color: red; font-size: var(--base-font-size); margin-top: 5px; display: none; }
                 </style>
                 <label for="${this._uniqueId}">${label}</label>
                 <input
