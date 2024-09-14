@@ -47,9 +47,19 @@ export default class DynamicButton extends ZephyrJS {
         }
         const zephyrClickHandler = this.getAttribute('onzephyr-click');
         if (zephyrClickHandler) {
+            // Use eval to execute the function, or directly invoke a method by name
             this.addEventListener('zephyr-click', (event) => {
-                const handlerFunction = new Function('event', zephyrClickHandler);
-                handlerFunction.call(this, event);
+                try {
+                    if (typeof window[zephyrClickHandler] === 'function') {
+                        // If it's a global function, call it directly
+                        window[zephyrClickHandler](event);
+                    } else {
+                        // Use eval as a fallback (can be risky, so use with care)
+                        eval(zephyrClickHandler).call(this, event);
+                    }
+                } catch (error) {
+                    console.error('Error in onzephyr-click handler:', error);
+                }
             });
         }
     }

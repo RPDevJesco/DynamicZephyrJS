@@ -218,6 +218,19 @@ export default class DynamicTextArea extends ZephyrJS {
         const editor = this._shadowRoot.querySelector(`#${this._uniqueId}-editor`);
         editor.addEventListener('input', this.handleInput.bind(this));
     }
+
+    updateValue(value) {
+        this._state.value = value;
+        this._state.value = value;
+        const editor = this._shadowRoot.querySelector(`#${this._uniqueId}-editor`);
+        if (editor) {
+            if (this._state.toolbar) {
+                editor.innerHTML = value;
+            } else {
+                editor.value = value;
+            }
+        }
+    }
 }
 
 defineCustomElement('zephyr-textarea', DynamicTextArea);

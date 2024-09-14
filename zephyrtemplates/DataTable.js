@@ -326,27 +326,35 @@ export default class DataTable extends ZephyrJS {
 
     updateTableContent() {
         const tableBody = this._shadowRoot.querySelector('.zephyr-data-table tbody');
+
+        // If table body doesn't exist, exit the function
         if (!tableBody) return;
 
+        // Get the current page's data based on pagination
         const pageData = this.getPaginatedData(this.state.filteredData);
 
+        // Build the table rows based on the filtered data
         let tableHtml = '';
         pageData.forEach(item => {
             tableHtml += `
-                <tr>
-                    ${this.state.multiSelect ? `<td><input type="checkbox" class="row-select" data-id="${item.id}" ${this.state.selectedRows.has(item.id) ? 'checked' : ''}></td>` : ''}
-                    ${Object.entries(item).map(([key, value]) =>
+            <tr>
+                ${this.state.multiSelect ? `<td><input type="checkbox" class="row-select" data-id="${item.id}" ${this.state.selectedRows.has(item.id) ? 'checked' : ''}></td>` : ''}
+                ${Object.entries(item).map(([key, value]) =>
                 `<td>${this.state.editing ?
                     `<input type="text" value="${value}" data-column="${key}" data-id="${item.id}" class="editable-field">` :
                     value}</td>`
             ).join('')}
-                </tr>
-            `;
+            </tr>
+        `;
         });
 
+        // Set the inner HTML of the table body to the generated HTML
         tableBody.innerHTML = tableHtml;
 
+        // Update pagination controls
         this.updatePagination();
+
+        // Reattach event listeners for newly created elements (e.g., checkboxes, inputs)
         this.addEventListeners();
     }
 
@@ -528,6 +536,16 @@ export default class DataTable extends ZephyrJS {
             groups[group].push(item);
             return groups;
         }, {});
+    }
+
+    // Method to refresh the data table
+    refreshTable() {
+        this.updateTableContent();
+    }
+
+    // Optional: You could reload the data source if needed
+    reloadData() {
+        this.loadData(); // Re-fetch the data and re-render
     }
 }
 
