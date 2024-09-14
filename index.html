@@ -16,6 +16,18 @@
         --color-blind-filter: none;
     }
 
+    /* Custom active class styles */
+    .selected-tab {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    header {
+        background-color: #333;
+        color: white;
+        padding: 15px;
+    }
+
     body {
         font-size: var(--base-font-size);
         filter: var(--contrast-filter) var(--color-blind-filter);
@@ -31,20 +43,29 @@
     }
 </style>
 <body>
-<vision-accessibility-adjuster></vision-accessibility-adjuster>
-<zephyr-grid-layout>
-    <zephyr-navigation
-            type="navbar"
-            collapsible="true"
-            animation="fade"
-            items='[
-            {"label": "Home", "href": "/"},
-            {"label": "Blog", "href": "/blog"},
-            {"label": "About", "href": "/about"},
-            {"label": "Contact", "href": "/contact"}
-          ]'>
-    </zephyr-navigation>
 
+<vision-accessibility-adjuster></vision-accessibility-adjuster>
+
+<zephyr-grid-layout>
+    <header>
+        <!-- Tabs Example -->
+        <zephyr-navigation
+                type="tabs"
+                animation="fade"
+                items='[
+        {"label": "Profile", "href": "#profile"},
+        {"label": "Messages", "href": "#messages"},
+        {"label": "Settings", "href": "#settings"}
+    ]'
+                tab-content-selector="#tab-content">
+        </zephyr-navigation>
+
+        <div id="tab-content">
+            <div id="profile">Profile content...</div>
+            <div id="messages" style="display: none;">Messages content...</div>
+            <div id="settings" style="display: none;">Settings content...</div>
+        </div>
+    </header>
     <h1>Welcome to ZephyrBlog</h1>
 
     <zephyr-card>

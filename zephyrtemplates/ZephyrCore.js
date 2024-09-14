@@ -48,4 +48,5 @@ import ZephyrChip from "../zephyrtemplates/ZephyrChip.js";
 import ZephyrToast from "../zephyrtemplates/ZephyrToast.js";
 import ZephyrContextMenu from "../zephyrtemplates/ZephyrContextMenu.js";
 import ZephyrChipContainer from "../zephyrtemplates/ZephyrChipContainer.js";
+import ZephyrNavigation from "../zephyrtemplates/ZephyrNavigation.js";
 import VisionAccessibilityAdjuster from "../zephyrtemplates/VisionAccessibilityAdjuster.js";
