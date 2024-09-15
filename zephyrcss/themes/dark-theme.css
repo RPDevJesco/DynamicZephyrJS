@@ -1,30 +1,30 @@
 [data-theme="dark"] {
     /* Main palette colors */
-    --primary-color: #1E1E1E;    /* Dark gray */
-    --secondary-color: #2D2D2D;  /* Slightly lighter dark gray */
-    --accent-color: #BB86FC;     /* Soft purple */
-    --background-color: #121212; /* Very dark gray */
-    --neutral-color: #3C3C3C;    /* Neutral dark gray */
-    --secondary-color-light: #3D3D5C; /* Light shade of secondary color */
+    --primary-color: var(--dark-gray);          /* Dark gray */
+    --secondary-color: var(--gray);             /* Slightly lighter dark gray */
+    --accent-color: var(--pastel-purple);       /* Soft purple */
+    --background-color: var(--black);           /* Very dark gray */
+    --neutral-color: var(--gray);               /* Neutral dark gray */
+    --secondary-color-light: var(--dark-blue);  /* Light shade of secondary color */
 
     /* Semantic Colors */
-    --info-color: var(--info-color);          /* Dodger blue */
-    --info-background: var(--info-background);/* Alice blue */
-    --success-color: var(--success-color);    /* Lime green */
-    --success-background: var(--success-background); /* Honeydew */
-    --danger-color: var(--danger-color);      /* Tomato */
-    --danger-background: var(--danger-background); /* Misty rose */
-    --warning-color: var(--warning-color);    /* Gold */
-    --warning-background: var(--warning-background); /* Cornsilk */
+    --info-color: var(--blue);                  /* Dodger blue */
+    --info-background: var(--watercolor-blue);  /* Alice blue */
+    --success-color: var(--green);              /* Lime green */
+    --success-background: var(--watercolor-green); /* Honeydew */
+    --danger-color: var(--red);                 /* Tomato */
+    --danger-background: var(--watercolor-red); /* Misty rose */
+    --warning-color: var(--yellow);             /* Gold */
+    --warning-background: var(--watercolor-yellow); /* Cornsilk */
 
     /* Text colors */
-    --light-text: var(--white);      /* White for text on dark backgrounds */
-    --dark-text: #E0E0E0;       /* Light gray for main text */
+    --light-text: var(--chalk-white);           /* White for text on dark backgrounds */
+    --dark-text: var(--light-gray);             /* Light gray for main text */
 
     /* Component-specific colors */
-    --button-hover-bg: #3700B3;  /* Darker blue for button hover */
-    --input-focus-border: #BB86FC; /* Adjusted to match the accent color */
-    --button-click-bg: #6200EA;
+    --button-hover-bg: var(--dark-purple);      /* Darker purple for button hover */
+    --input-focus-border: var(--pastel-purple); /* Adjusted to match the accent color */
+    --button-click-bg: var(--purple);
 
     /* Typography */
     --font-family-sans-serif: "Montserrat", "Helvetica Neue", Arial, sans-serif;
@@ -33,12 +33,12 @@
 
     /* Body styles */
     --body-bg: var(--background-color);
-    --body-color: #E0E0E0;       /* Light gray for main text */
+    --body-color: var(--dark-text);             /* Light gray for main text */
 
     /* Link styles */
     --link-color: var(--accent-color);
     --link-decoration: none;
-    --link-hover-color: #BB86FC; /* Darker shade of coral for hover */
+    --link-hover-color: var(--pastel-purple);   /* Darker shade of purple for hover */
 
     /* Additional theme-specific variables */
     --header-bg: var(--primary-color);
@@ -46,8 +46,8 @@
     --footer-bg: var(--secondary-color);
     --footer-color: var(--primary-color);
     --button-primary-bg: var(--accent-color);
-    --button-primary-color: white;
-    --card-bg: #1E1E1E; /* Dark gray for card background */
+    --button-primary-color: var(--chalk-white);
+    --card-bg: var(--dark-gray);                /* Dark gray for card background */
     --card-border: var(--neutral-color);
 
     /* Button specific variables */
@@ -58,7 +58,7 @@
     --button-disabled-background: var(--neutral-color);
 
     /* Card specific variables */
-    --card-box-shadow: var(--shadow-light);
+    --card-box-shadow: var(--shadow-medium);
     --card-padding: 16px;
     --card-border-radius: 8px;
     --card-header-font-size: 1.5em;
@@ -68,9 +68,9 @@
     /* CardGroup Component Variables */
     --card-group-gap: 1rem;
     --card-min-width: 250px;
-    --card-border-color: #3C3C3C;
-    --card-header-color: #E0E0E0;
-    --card-content-color: #BDBDBD;
+    --card-border-color: var(--gray);
+    --card-header-color: var(--light-gray);
+    --card-content-color: var(--chalk-grey);
     --card-content-font-size: 1rem;
 
     /* Input specific variables */
@@ -93,7 +93,7 @@
     /* Modal specific variables */
     --modal-background: var(--background-color);
     --modal-border-radius: 10px;
-    --modal-box-shadow: var(--shadow-dark);
+    --modal-box-shadow: var(--shadow-large);
     --modal-width: 300px;
     --modal-z-index: 1000;
     --modal-header-padding: 16px;
@@ -118,22 +118,22 @@
     --notification-warning-text: var(--warning-color);
 
     /* Markdown Editor and Renderer Colors */
-    --markdown-bg: #272822;
-    --markdown-color: #F8F8F2;
-    --markdown-keyword: #F92672;
-    --markdown-string: #E6DB74;
-    --markdown-number: #AE81FF;
-    --markdown-function: #A6E22E;
-    --markdown-comment: #75715E;
-    --markdown-method: #66D9EF;
-    --markdown-tag: #0000FF;
-    --markdown-attribute: #FF0000;
-    --markdown-at-rule: #AF00DB;
-    --markdown-punctuation: #000000;
-    --markdown-property: #FF0000;
-    --markdown-value: #0000FF;
-    --markdown-selector: #800000;
-    --markdown-indentation: #CCCCCC;
+    --markdown-bg: var(--dark-gray);
+    --markdown-color: var(--chalk-white);
+    --markdown-keyword: var(--pastel-red);
+    --markdown-string: var(--pastel-yellow);
+    --markdown-number: var(--pastel-purple);
+    --markdown-function: var(--pastel-green);
+    --markdown-comment: var(--chalk-grey);
+    --markdown-method: var(--pastel-cyan);
+    --markdown-tag: var(--pastel-blue);
+    --markdown-attribute: var(--pastel-red);
+    --markdown-at-rule: var(--pastel-purple);
+    --markdown-punctuation: var(--chalk-white);
+    --markdown-property: var(--pastel-red);
+    --markdown-value: var(--pastel-blue);
+    --markdown-selector: var(--pastel-brown);
+    --markdown-indentation: var(--chalk-grey);
     --markdown-text: var(--markdown-indentation);
 
     --spacing-none: 0;
@@ -143,4 +143,18 @@
     --spacing-large: 20px;
 
     --border-radius: 5px;
+}
+
+/* Dark Theme Specific Styles */
+[data-theme="dark"] .glow-effect {
+    text-shadow: 0 0 5px var(--accent-color);
+}
+
+[data-theme="dark"] .neon-border {
+    border: 2px solid var(--accent-color);
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+[data-theme="dark"] .dark-gradient {
+    background: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
 }

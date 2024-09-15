@@ -44,7 +44,7 @@
 </style>
 <body>
 
-<header>
+<header data-effect="chalk">
     <!-- Tabs Example -->
     <zephyr-navigation
             type="tabs"
@@ -65,7 +65,18 @@
 </header>
 <zephyr-grid-layout>
     <zephyr-grid-layout>
-        <h1>Welcome to ZephyrBlog</h1>
+        <zephyr-button
+                id="myButton"
+                type="toggle"
+                value="Click me!"
+                toggle-on-text="ON"
+                toggle-off-text="OFF"
+                text-position="right"
+                onzephyr-change="setMyTheme(event)">
+        </zephyr-button>
+    </zephyr-grid-layout>
+    <zephyr-grid-layout >
+        <h1 data-effect="crayon">Welcome to ZephyrBlog</h1>
     </zephyr-grid-layout>
     <zephyr-grid-layout>
         <vision-accessibility-adjuster></vision-accessibility-adjuster>
@@ -84,7 +95,7 @@
         </zephyr-card>
     </zephyr-grid-layout>
 
-    <zephyr-grid-layout>
+    <zephyr-grid-layout data-effect="watercolor">
         <zephyr-data-table
                 id="blogPosts"
                 data-type="default"
@@ -150,6 +161,16 @@
 </zephyr-grid-layout>
 
 <script>
+    function setMyTheme(event) {
+        const isDarkMode = event.detail.checked;
+        if (isDarkMode) {
+            setTheme(Themes.GRADIENT);
+        } else {
+            setTheme(Themes.DARK);
+        }
+        console.log('current theme is:' + document.documentElement.getAttribute('data-theme'))
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const blogPostMenu = document.getElementById('blogPostMenu');
 

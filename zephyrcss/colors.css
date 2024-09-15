@@ -1,121 +1,182 @@
 :root {
+    --effect-mode: 'none'; /* Default, no effect */
+
     /* Basic Colors */
-    --blue: #007bff;
-    --indigo: #6610f2;
-    --purple: #6f42c1;
-    --pink: #e83e8c;
-    --red: #dc3545;
-    --orange: #fd7e14;
-    --yellow: #ffc107;
-    --green: #28a745;
-    --teal: #20c997;
-    --cyan: #17a2b8;
     --white: #ffffff;
-    --gray: #6c757d;
-    --gray-dark: #343a40;
     --black: #000000;
+    --red: #ff0000;
+    --green: #00ff00;
+    --blue: #0000ff;
+    --yellow: #ffff00;
+    --magenta: #ff00ff;
+    --cyan: #00ffff;
 
     /* Extended Colors */
-    --lime: #00ff00;
-    --blue-violet: #8a2be2;
-    --gold: #ffd700;
-    --silver: #c0c0c0;
-    --bronze: #cd7f32;
-    --aqua: #00ffff;
-    --coral: #ff7f50;
-    --tomato: #ff6347;
-    --khaki: #f0e68c;
+    --orange: #ffa500;
+    --purple: #800080;
+    --pink: #ffc0cb;
+    --brown: #a52a2a;
+    --gray: #808080;
+    --teal: #008080;
     --navy: #000080;
     --olive: #808000;
     --maroon: #800000;
+    --lime: #00ff00;
+    --indigo: #4b0082;
+    --violet: #ee82ee;
+    --coral: #ff7f50;
     --turquoise: #40e0d0;
-    --plum: #dda0dd;
-    --orchid: #da70d6;
-    --chocolate: #d2691e;
-    --sienna: #a0522d;
+    --gold: #ffd700;
+    --silver: #c0c0c0;
 
-    /* Light Shades */
-    --blue-light: #cce5ff;
-    --indigo-light: #e0e1ff;
-    --purple-light: #e6d4f1;
-    --pink-light: #f8d7da;
-    --red-light: #f8d7da;
-    --orange-light: #ffe5b5;
-    --yellow-light: #fff3cd;
-    --green-light: #d4edda;
-    --teal-light: #d1ecf1;
-    --cyan-light: #d1ecf1;
-    --gray-light: #f8f9fa;
+    /* Pastel Colors */
+    --pastel-red: color-mix(in srgb, var(--red) 30%, white);
+    --pastel-green: color-mix(in srgb, var(--green) 30%, white);
+    --pastel-blue: color-mix(in srgb, var(--blue) 30%, white);
+    --pastel-yellow: color-mix(in srgb, var(--yellow) 30%, white);
+    --pastel-magenta: color-mix(in srgb, var(--magenta) 30%, white);
+    --pastel-cyan: color-mix(in srgb, var(--cyan) 30%, white);
+    --pastel-orange: color-mix(in srgb, var(--orange) 30%, white);
+    --pastel-purple: color-mix(in srgb, var(--purple) 30%, white);
+    --pastel-pink: color-mix(in srgb, var(--pink) 30%, white);
+    --pastel-brown: color-mix(in srgb, var(--brown) 30%, white);
+    --pastel-gray: color-mix(in srgb, var(--gray) 30%, white);
+    --pastel-teal: color-mix(in srgb, var(--teal) 30%, white);
+    --pastel-navy: color-mix(in srgb, var(--navy) 30%, white);
+    --pastel-olive: color-mix(in srgb, var(--olive) 30%, white);
+    --pastel-maroon: color-mix(in srgb, var(--maroon) 30%, white);
+    --pastel-lime: color-mix(in srgb, var(--lime) 30%, white);
+    --pastel-indigo: color-mix(in srgb, var(--indigo) 30%, white);
+    --pastel-violet: color-mix(in srgb, var(--violet) 30%, white);
+    --pastel-coral: color-mix(in srgb, var(--coral) 30%, white);
+    --pastel-turquoise: color-mix(in srgb, var(--turquoise) 30%, white);
+    --pastel-gold: color-mix(in srgb, var(--gold) 30%, white);
+    --pastel-silver: color-mix(in srgb, var(--silver) 30%, white);
+
+    /* Chalk-like Colors */
+    --chalk-white: color-mix(in srgb, var(--white) 70%, var(--light-gray));
+    --chalk-grey: color-mix(in srgb, var(--gray) 70%, var(--light-gray));
+    --chalk-red: color-mix(in srgb, var(--red) 70%, var(--light-gray));
+    --chalk-green: color-mix(in srgb, var(--green) 70%, var(--light-gray));
+    --chalk-blue: color-mix(in srgb, var(--blue) 70%, var(--light-gray));
+    --chalk-yellow: color-mix(in srgb, var(--yellow) 70%, var(--light-gray));
+    --chalk-magenta: color-mix(in srgb, var(--magenta) 70%, var(--light-gray));
+    --chalk-cyan: color-mix(in srgb, var(--cyan) 70%, var(--light-gray));
+    --chalk-orange: color-mix(in srgb, var(--orange) 70%, var(--light-gray));
+    --chalk-purple: color-mix(in srgb, var(--purple) 70%, var(--light-gray));
+    --chalk-pink: color-mix(in srgb, var(--pink) 70%, var(--light-gray));
+    --chalk-brown: color-mix(in srgb, var(--brown) 70%, var(--light-gray));
+    --chalk-teal: color-mix(in srgb, var(--teal) 70%, var(--light-gray));
+    --chalk-navy: color-mix(in srgb, var(--navy) 70%, var(--light-gray));
+
+    /* Watercolor-like Colors */
+    --watercolor-red: color-mix(in srgb, var(--red) 60%, transparent);
+    --watercolor-green: color-mix(in srgb, var(--green) 60%, transparent);
+    --watercolor-blue: color-mix(in srgb, var(--blue) 60%, transparent);
+    --watercolor-yellow: color-mix(in srgb, var(--yellow) 60%, transparent);
+    --watercolor-magenta: color-mix(in srgb, var(--magenta) 60%, transparent);
+    --watercolor-cyan: color-mix(in srgb, var(--cyan) 60%, transparent);
+    --watercolor-orange: color-mix(in srgb, var(--orange) 60%, transparent);
+    --watercolor-purple: color-mix(in srgb, var(--purple) 60%, transparent);
+    --watercolor-pink: color-mix(in srgb, var(--pink) 60%, transparent);
+    --watercolor-brown: color-mix(in srgb, var(--brown) 60%, transparent);
+    --watercolor-teal: color-mix(in srgb, var(--teal) 60%, transparent);
+    --watercolor-navy: color-mix(in srgb, var(--navy) 60%, transparent);
+
+    /* Crayon-like Colors */
+    --crayon-red: color-mix(in srgb, var(--red) 85%, var(--light-yellow));
+    --crayon-green: color-mix(in srgb, var(--green) 85%, var(--light-yellow));
+    --crayon-blue: color-mix(in srgb, var(--blue) 85%, var(--light-yellow));
+    --crayon-yellow: color-mix(in srgb, var(--yellow) 85%, var(--light-orange));
+    --crayon-magenta: color-mix(in srgb, var(--magenta) 85%, var(--light-yellow));
+    --crayon-cyan: color-mix(in srgb, var(--cyan) 85%, var(--light-yellow));
+    --crayon-orange: color-mix(in srgb, var(--orange) 85%, var(--light-yellow));
+    --crayon-purple: color-mix(in srgb, var(--purple) 85%, var(--light-yellow));
+    --crayon-pink: color-mix(in srgb, var(--pink) 85%, var(--light-yellow));
+    --crayon-brown: color-mix(in srgb, var(--brown) 85%, var(--light-yellow));
+    --crayon-teal: color-mix(in srgb, var(--teal) 85%, var(--light-yellow));
+    --crayon-navy: color-mix(in srgb, var(--navy) 85%, var(--light-yellow));
+
+    /* Light Shades (can be replaced by pastel versions if desired) */
+    --light-red: #ffcccb;
+    --light-green: #90ee90;
+    --light-blue: #add8e6;
+    --light-yellow: #ffffe0;
+    --light-magenta: #ffddf4;
+    --light-cyan: #e0ffff;
+    --light-orange: #ffd580;
+    --light-purple: #d8bfd8;
+    --light-pink: #ffe4e1;
+    --light-brown: #d2b48c;
+    --light-gray: #d3d3d3;
+    --light-teal: #afeeee;
 
     /* Dark Shades */
-    --blue-dark: #0056b3;
-    --indigo-dark: #3e0ca7;
-    --purple-dark: #4b1e83;
-    --pink-dark: #b21f3d;
-    --red-dark: #c82333;
-    --orange-dark: #e16a04;
-    --yellow-dark: #d39e00;
-    --green-dark: #218838;
-    --teal-dark: #138496;
-    --cyan-dark: #117a8b;
-    --gray-dark-2: #343a40;
-    --black-dark: #000000;
+    --dark-red: #8b0000;
+    --dark-green: #006400;
+    --dark-blue: #00008b;
+    --dark-yellow: #ffd700;
+    --dark-magenta: #8b008b;
+    --dark-cyan: #008b8b;
+    --dark-orange: #ff8c00;
+    --dark-purple: #4b0082;
+    --dark-pink: #ff1493;
+    --dark-brown: #8b4513;
+    --dark-gray: #a9a9a9;
+    --dark-teal: #008080;
 
-    /* Pastel Shades */
-    --pastel-blue: #aec6cf;
-    --pastel-green: #77dd77;
-    --pastel-pink: #ffb3ba;
-    --pastel-yellow: #ffdfba;
-    --pastel-purple: #c9c9ff;
-    --pastel-orange: #ffd1dc;
-
-    /* Additional Shades */
-    --light-blue: #add8e6;
-    --light-green: #90ee90;
-    --light-coral: #f08080;
-    --light-salmon: #ffa07a;
-    --light-sea-green: #20b2aa;
-    --light-sky-blue: #87cefa;
-    --light-steel-blue: #b0c4de;
-    --light-goldenrod-yellow: #fafad2;
-    --light-gray: #d3d3d3;
-    --light-slate-gray: #778899;
-
-    /* Custom Shades */
-    --custom-blue: #1e90ff;
-    --custom-green: #32cd32;
-    --custom-red: #dc143c;
-    --custom-yellow: #ffd700;
-    --custom-teal: #008080;
-    --custom-orange: #ff4500;
-
-    /* Additional Semantic Colors */
-    --info-color: #17a2b8;
-    --success-color: #2ECC71;
-    --danger-color: #E74C3C;
-    --warning-color: #F39C12;
-    --info-background: #d1ecf1;
-    --success-background: #d4edda;
-    --danger-background: #f8d7da;
-    --warning-background: #fff3cd;
-
-    /* Gradient Colors */
-    --gradient-primary: linear-gradient(135deg, #6f42c1, #6610f2);
-    --gradient-secondary: linear-gradient(135deg, #6c757d, #343a40);
+    /* Strokes */
+    --stroke-light: var(--white);
+    --stroke-medium: var(--gray);
+    --stroke-dark: var(--black);
 
     /* Shadows */
-    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
-    --shadow-dark: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+    --shadow-small: 0 2px 4px rgba(var(--black), 0.1);
+    --shadow-medium: 0 4px 8px rgba(var(--black), 0.2);
+    --shadow-large: 0 8px 16px rgba(var(--black), 0.3);
+    --shadow-extra-large: 0 12px 24px rgba(var(--black), 0.4);
 
-body {
-    color: var(--blue-light);
-}
+    --shadow-top: 0 -4px 8px rgba(var(--black), 0.2);
+    --shadow-right: 4px 0 8px rgba(var(--black), 0.2);
+    --shadow-bottom: 0 4px 8px rgba(var(--black), 0.2);
+    --shadow-left: -4px 0 8px rgba(var(--black), 0.2);
 
-a {
-    color: var(--pastel-pink);
-}
+    --shadow-inset: inset 0 2px 4px rgba(var(--black), 0.1);
 
-a:hover {
-    color: var(--light-goldenrod-yellow);
+    /* Gradient Definitions */
+    --gradient-primary: linear-gradient(45deg, var(--blue), var(--cyan));
+    --gradient-secondary: linear-gradient(45deg, var(--purple), var(--pink));
+    --gradient-warm: linear-gradient(45deg, var(--red), var(--orange));
+    --gradient-cool: linear-gradient(45deg, var(--green), var(--teal));
+    --gradient-rainbow: linear-gradient(
+            to right,
+            var(--red),
+            var(--orange),
+            var(--yellow),
+            var(--green),
+            var(--blue),
+            var(--indigo),
+            var(--violet)
+    );
+    --gradient-sunset: linear-gradient(to bottom, var(--orange), var(--pink), var(--purple));
+    --gradient-ocean: linear-gradient(to bottom right, var(--blue), var(--teal), var(--cyan));
+    --gradient-forest: linear-gradient(to bottom left, var(--dark-green), var(--green), var(--lime));
+    --gradient-fire: linear-gradient(45deg, var(--red), var(--orange), var(--yellow));
+    --gradient-earth: linear-gradient(to bottom, var(--brown), var(--olive), var(--dark-green));
+
+    /* Pastel Gradients */
+    --gradient-pastel-rainbow: linear-gradient(
+            to right,
+            var(--pastel-red),
+            var(--pastel-orange),
+            var(--pastel-yellow),
+            var(--pastel-green),
+            var(--pastel-blue),
+            var(--pastel-indigo),
+            var(--pastel-violet)
+    );
+    --gradient-pastel-sunset: linear-gradient(to bottom, var(--pastel-orange), var(--pastel-pink), var(--pastel-purple));
+    --gradient-chalk: linear-gradient(45deg, var(--chalk-blue), var(--chalk-purple));
+    --gradient-watercolor: linear-gradient(to right, var(--watercolor-red), var(--watercolor-orange), var(--watercolor-yellow));
+    --gradient-crayon: linear-gradient(to bottom left, var(--crayon-green), var(--crayon-blue), var(--crayon-purple));
 }

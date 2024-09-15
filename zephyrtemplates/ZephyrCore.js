@@ -5,6 +5,7 @@ export const Themes = Object.freeze({
     DARK: 'dark',
     ELEGANT: 'elegant',
     FANTASY: 'fantasy',
+    GRADIENT: 'gradient',
     HEAVEN: 'heaven',
     HELLFIRE: 'hellfire',
     HIGH_CONTRAST: 'high-contrast',
